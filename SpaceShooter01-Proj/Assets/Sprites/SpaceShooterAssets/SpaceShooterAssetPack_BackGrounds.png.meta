@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_0
+      name: Space_Background_01
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_1
+      name: Space_Background_02
       rect:
         serializedVersion: 2
         x: 129
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_2
+      name: Space_Background_03
       rect:
         serializedVersion: 2
         x: 258
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_3
+      name: Space_Background_04
       rect:
         serializedVersion: 2
         x: 0
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_4
+      name: Space_Background_05
       rect:
         serializedVersion: 2
         x: 128
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_BackGrounds_5
+      name: Space_Background_06
       rect:
         serializedVersion: 2
         x: 257
@@ -246,12 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SpaceShooterAssetPack_BackGrounds_0: 1565769935
-      SpaceShooterAssetPack_BackGrounds_1: 2050737126
-      SpaceShooterAssetPack_BackGrounds_2: -1357461062
-      SpaceShooterAssetPack_BackGrounds_3: 1021722501
-      SpaceShooterAssetPack_BackGrounds_4: -84714035
-      SpaceShooterAssetPack_BackGrounds_5: 1473380087
+      Space_Background_01: 1565769935
+      Space_Background_02: 2050737126
+      Space_Background_03: -1357461062
+      Space_Background_04: 1021722501
+      Space_Background_05: -84714035
+      Space_Background_06: 1473380087
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
