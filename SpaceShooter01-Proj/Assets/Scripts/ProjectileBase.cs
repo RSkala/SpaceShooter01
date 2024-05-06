@@ -58,4 +58,55 @@ public abstract class ProjectileBase : MonoBehaviour
         // Just destroy the projectile
         Destroy(gameObject);
     }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("ProjectileBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+
+        if(other.TryGetComponent<EnemyShipBase>(out var enemyShip))
+        {
+            // Get the enemy ship position before destroying
+            Vector2 enemyShipPosition = enemyShip.transform.position;
+
+            // Temp: Destroy the enemy ship
+            Destroy(enemyShip.gameObject);
+
+            // Show an explosion at the destruction position with a random rotation
+            GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
+            float randomRotation = Random.Range(0.0f, 360.0f);
+            Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
+            GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation);
+
+            // Destroy this projectile
+            Destroy(gameObject);
+        }
+        else
+        {
+            // TEST: Check the parent -- TODO: Reorganize the hierarchy -- it's overly complicated. Just rotate the main object 180 degrees on spawn.
+            if(other.transform.parent != null)
+            {
+                if(other.transform.parent.TryGetComponent<EnemyShipBase>(out var enemyShip2))
+                {
+                    // Actually found the component on the parent...  Copy-paste incoming...
+
+                    // Get the enemy ship position before destroying
+                    Vector2 enemyShipPosition = enemyShip2.transform.position;
+
+                    // Temp: Destroy the enemy ship
+                    Destroy(enemyShip2.gameObject);
+
+                    // Show an explosion at the destruction position with a random rotation
+                    GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
+                    float randomRotation = Random.Range(0.0f, 360.0f);
+                    Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
+                    GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation);
+                }
+            }
+        }
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+    }
 }
