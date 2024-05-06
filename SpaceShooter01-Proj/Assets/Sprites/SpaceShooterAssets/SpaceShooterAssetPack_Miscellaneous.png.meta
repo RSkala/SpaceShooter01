@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_0
+      name: Icon_X
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_1
+      name: Icon_1_Dot
       rect:
         serializedVersion: 2
         x: 8
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_2
+      name: Heart_Icon_Large
       rect:
         serializedVersion: 2
         x: 16
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_3
+      name: Shield_Icon_Large
       rect:
         serializedVersion: 2
         x: 24
@@ -362,7 +362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_12
+      name: Icon_Circle
       rect:
         serializedVersion: 2
         x: 0
@@ -383,7 +383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_13
+      name: Icon_4_Dots
       rect:
         serializedVersion: 2
         x: 8
@@ -404,7 +404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_14
+      name: Arrow_Icon_Large
       rect:
         serializedVersion: 2
         x: 16
@@ -425,7 +425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_15
+      name: TwoLines_Icon_Large
       rect:
         serializedVersion: 2
         x: 24
@@ -614,7 +614,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_24
+      name: Shield_HalfCircle_Left
       rect:
         serializedVersion: 2
         x: 0
@@ -635,7 +635,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_25
+      name: Shield_HalfCircle_Right
       rect:
         serializedVersion: 2
         x: 8
@@ -656,13 +656,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_26
+      name: Asteroid_Large
       rect:
         serializedVersion: 2
-        x: 16
-        y: 40
-        width: 8
-        height: 8
+        x: 17
+        y: 33
+        width: 13
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -866,13 +866,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_36
+      name: Shield_Icon_Small
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 8
-        height: 8
+        x: 2
+        y: 33
+        width: 5
+        height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -887,7 +887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_37
+      name: Asteroid_Small
       rect:
         serializedVersion: 2
         x: 8
@@ -1118,13 +1118,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceShooterAssetPack_Miscellaneous_48
+      name: Heart_Icon_Small
       rect:
         serializedVersion: 2
-        x: 0
-        y: 24
-        width: 8
-        height: 8
+        x: 2
+        y: 26
+        width: 5
+        height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1800,6 +1800,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Arrow_Icon_Large: -1689698644
+      Asteroid_Large: -993911070
+      Asteroid_Small: -872990719
       Explosion_1_1: -1828601295
       Explosion_1_2: 1413182564
       Explosion_1_3: -898308731
@@ -1812,10 +1815,20 @@ TextureImporter:
       Explosion_3_2: -262422853
       Explosion_3_3: -1052269783
       Explosion_3_4: 52753439
+      Heart_Icon_Large: 753760416
+      Heart_Icon_Small: 520250716
+      Icon_1_Dot: -526563210
+      Icon_4_Dots: 370465253
+      Icon_Circle: 985473804
+      Icon_X: 401109782
       Shield_1: -395226291
       Shield_2: 645668589
       Shield_3: -381460406
       Shield_4: 1208849744
+      Shield_HalfCircle_Left: 1956126445
+      Shield_HalfCircle_Right: 367117792
+      Shield_Icon_Large: 1915286042
+      Shield_Icon_Small: 1450922031
       ShipExhaust_1_1: 1314770750
       ShipExhaust_1_2: -584161473
       ShipExhaust_1_3: 441794675
@@ -1832,37 +1845,23 @@ TextureImporter:
       ShipExhaust_4_2: 1100932845
       ShipExhaust_4_3: 795000210
       ShipExhaust_4_4: -551325498
-      SpaceShooterAssetPack_Miscellaneous_0: 401109782
-      SpaceShooterAssetPack_Miscellaneous_1: -526563210
       SpaceShooterAssetPack_Miscellaneous_10: 787570980
       SpaceShooterAssetPack_Miscellaneous_11: 1498265358
-      SpaceShooterAssetPack_Miscellaneous_12: 985473804
-      SpaceShooterAssetPack_Miscellaneous_13: 370465253
-      SpaceShooterAssetPack_Miscellaneous_14: -1689698644
-      SpaceShooterAssetPack_Miscellaneous_15: -2010470169
-      SpaceShooterAssetPack_Miscellaneous_2: 753760416
       SpaceShooterAssetPack_Miscellaneous_20: 1381047909
       SpaceShooterAssetPack_Miscellaneous_21: 665385779
       SpaceShooterAssetPack_Miscellaneous_22: -1228666540
       SpaceShooterAssetPack_Miscellaneous_23: 181777690
-      SpaceShooterAssetPack_Miscellaneous_24: 1956126445
-      SpaceShooterAssetPack_Miscellaneous_25: 367117792
-      SpaceShooterAssetPack_Miscellaneous_26: -993911070
       SpaceShooterAssetPack_Miscellaneous_27: -113522874
-      SpaceShooterAssetPack_Miscellaneous_3: 1915286042
       SpaceShooterAssetPack_Miscellaneous_32: -774370570
       SpaceShooterAssetPack_Miscellaneous_33: 1046791224
       SpaceShooterAssetPack_Miscellaneous_34: -296420137
       SpaceShooterAssetPack_Miscellaneous_35: -922346890
-      SpaceShooterAssetPack_Miscellaneous_36: 1450922031
-      SpaceShooterAssetPack_Miscellaneous_37: -872990719
       SpaceShooterAssetPack_Miscellaneous_38: 1831998478
       SpaceShooterAssetPack_Miscellaneous_39: -926863452
       SpaceShooterAssetPack_Miscellaneous_44: 1317106102
       SpaceShooterAssetPack_Miscellaneous_45: 386899496
       SpaceShooterAssetPack_Miscellaneous_46: -1446236315
       SpaceShooterAssetPack_Miscellaneous_47: 2010233753
-      SpaceShooterAssetPack_Miscellaneous_48: 520250716
       SpaceShooterAssetPack_Miscellaneous_49: 2117156454
       SpaceShooterAssetPack_Miscellaneous_50: -361844256
       SpaceShooterAssetPack_Miscellaneous_51: 437080649
@@ -1880,6 +1879,7 @@ TextureImporter:
       SpaceShooterAssetPack_Miscellaneous_67: 1922571826
       SpaceShooterAssetPack_Miscellaneous_8: -1215117342
       SpaceShooterAssetPack_Miscellaneous_9: 29463630
+      TwoLines_Icon_Large: -2010470169
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
