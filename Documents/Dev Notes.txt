@@ -50,3 +50,12 @@ Sound Effects
 * I also turned down the volume of the audio source when playing the shooting clip, as the player hears this sound almost constantly.
 * I did the same with small enemy explosions.
 
+
+--------------
+Weapon Firing
+--------------
+* My first implementation of weapon firing had the player aim with the right stick and press and hold the right trigger to fire.
+* While this works in a twin stick shooter type game like Nuclear Throne, in a hyper fast-paced game like Geometry Wars, right-stick fire feels better.
+* Also, the ship no longer turns towards the stick aiming. It didn't look right for this game.
+
+
