@@ -46,9 +46,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Fire projectiles if Fire button is held down
-        if(_fireInputAction.IsPressed())
+        // if(_fireInputAction.IsPressed())
+        // {
+        //     //Debug.Log("Fire Projectiles Now!");
+        //     _timeSinceLastShot += Time.deltaTime;
+        //     if(_timeSinceLastShot >= _fireRate)
+        //     {
+        //         // Fire projectile/projectiles (WIP)
+        //         FireProjectile();
+        //         _timeSinceLastShot = 0.0f;
+        //     }
+        // }
+
+        // Update right stick firing
+        if(!_lookDirectionInput.Equals(Vector2.zero))
         {
-            //Debug.Log("Fire Projectiles Now!");
             _timeSinceLastShot += Time.deltaTime;
             if(_timeSinceLastShot >= _fireRate)
             {
@@ -56,6 +68,10 @@ public class PlayerController : MonoBehaviour
                 FireProjectile();
                 _timeSinceLastShot = 0.0f;
             }
+        }
+        else
+        {
+            ResetTimeSinceLastShot();
         }
     }
 
