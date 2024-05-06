@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform[] _firePoints;
     [SerializeField] ProjectileBase _projectilePrefab;
     [SerializeField] float _projectileShotsPerSecond;
+    [SerializeField] Transform _firePointsPivot;
 
     // Components
     Rigidbody2D _rigidbody2D;
@@ -79,7 +80,8 @@ public class PlayerController : MonoBehaviour
         if(!_lookDirectionInput.Equals(Vector2.zero))
         {
             float rotateAngle = CalculateRotationAngleFromInputDirection(_lookDirectionInput);
-            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+            //transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+            _firePointsPivot.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
         }
     }
 
@@ -118,13 +120,14 @@ public class PlayerController : MonoBehaviour
         // RKS TODO: Allocate references on Start for pooling
 
         // Use the ship's current rotation for any projectile rotation
-        Quaternion currentShipRotation = transform.rotation;
+        //Quaternion currentShipRotation = transform.rotation;
+        Quaternion currentFirePointPivotRotation = _firePointsPivot.rotation;
 
         // Iterate through the Fire Points and fire a projectile directly forwards
         foreach(Transform firePoint in _firePoints)
         {
             // Always fire the first projectile straight from the weapon firepoint
-            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab, firePoint.position, currentShipRotation);
+            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab, firePoint.position, currentFirePointPivotRotation);
         }
 
         // Play a fire sound

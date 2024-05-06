@@ -2930,6 +2930,7 @@ MonoBehaviour:
   - {fileID: 1690055937}
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
+  _firePointsPivot: {fileID: 1083617291}
 --- !u!114 &914535460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4237,6 +4238,7 @@ MonoBehaviour:
   - {fileID: 881650857}
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
+  _firePointsPivot: {fileID: 0}
 --- !u!114 &1616306985
 MonoBehaviour:
   m_ObjectHideFlags: 0
