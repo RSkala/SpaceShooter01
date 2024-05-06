@@ -42,3 +42,11 @@ Collision Info
 * Note: As long as one of the colliding objects are set to IsTrigger, then the colliding objects can use OnTriggerEnter2D.
 
 
+--------------
+Sound Effects
+--------------
+* I often will implement a random selection between several clips when "firing" weapons.
+* However, for this game I felt the variations in sounds was really annoying, so I found the shortest and least annoying sound effect and only used one.
+* I also turned down the volume of the audio source when playing the shooting clip, as the player hears this sound almost constantly.
+* I did the same with small enemy explosions.
+

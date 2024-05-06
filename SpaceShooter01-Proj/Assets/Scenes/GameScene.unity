@@ -3178,6 +3178,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8725572483650736106, guid: 651303402c9df469b89187b63e412f79, type: 3}
   m_PrefabInstance: {fileID: 1005192669}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1031072579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031072580}
+  - component: {fileID: 1031072581}
+  m_Layer: 0
+  m_Name: AudioPlayback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031072580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031072579}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1418834845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1031072581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031072579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a15b3dc37694b5e8dd34a62184cb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerShotClips:
+  - {fileID: 8300000, guid: 51831eb0e80314622b43803f963b61c3, type: 3}
+  _enemyExplosionClips:
+  - {fileID: 8300000, guid: 4ca6e65b7d3c248d39e090c5943bc49b, type: 3}
 --- !u!1001 &1059687026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3735,6 +3783,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2040285430}
+  - {fileID: 1031072580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1430832575

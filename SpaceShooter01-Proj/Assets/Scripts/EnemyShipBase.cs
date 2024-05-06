@@ -9,7 +9,7 @@ public abstract class EnemyShipBase : MonoBehaviour
 
     Transform _target;
 
-    // The enemy ship assets are built facing downwards
+    // The enemy ship assets are built facing downwards so it's easiest just to rotate the facing
     const float EXTRA_ROTATION_ANGLE = 180.0f;
 
     protected virtual void Start()
@@ -38,14 +38,9 @@ public abstract class EnemyShipBase : MonoBehaviour
         _rigidbody2D.MovePosition(newPos);
 
         // Rotate towards target
-        //float rotateAngle = CalculateRotationAngleFromInputDirection(_lookDirectionInput);
-        //Vector3 cross = Vector3.Cross(Vector2.up, inputDirection);
-        //float flipValue = cross.z < 0.0f ? -1.0f : 1.0f;
-        //float rotateAngle = Vector2.Angle(Vector2.up, inputDirection) * flipValue;
         float rotateAngle = Vector2.SignedAngle(Vector2.up, dirToTarget);
         rotateAngle += EXTRA_ROTATION_ANGLE;
         //transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
-        //_rigidbody2D.MoveR.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
         _rigidbody2D.MoveRotation(rotateAngle);
     }
 

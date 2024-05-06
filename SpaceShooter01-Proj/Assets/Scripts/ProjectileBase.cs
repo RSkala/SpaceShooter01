@@ -68,8 +68,9 @@ public abstract class ProjectileBase : MonoBehaviour
             // Get the enemy ship position before destroying
             Vector2 enemyShipPosition = enemyShip.transform.position;
 
-            // Temp: Destroy the enemy ship
+            // Temp: Destroy the enemy ship and play sound effect
             Destroy(enemyShip.gameObject);
+            AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.EnemyExplosion);
 
             // Show an explosion at the destruction position with a random rotation
             GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
@@ -92,8 +93,9 @@ public abstract class ProjectileBase : MonoBehaviour
                     // Get the enemy ship position before destroying
                     Vector2 enemyShipPosition = enemyShip2.transform.position;
 
-                    // Temp: Destroy the enemy ship
+                    // Temp: Destroy the enemy ship and play sound effect
                     Destroy(enemyShip2.gameObject);
+                    AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.EnemyExplosion);
 
                     // Show an explosion at the destruction position with a random rotation
                     GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();

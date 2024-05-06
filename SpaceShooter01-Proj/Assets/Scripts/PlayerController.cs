@@ -127,7 +127,8 @@ public class PlayerController : MonoBehaviour
             ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab, firePoint.position, currentShipRotation);
         }
 
-        // TODO: Play a fire sound
+        // Play a fire sound
+        AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.PlayerShot);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
