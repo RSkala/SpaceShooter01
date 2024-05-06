@@ -33,3 +33,12 @@ Ship Sprites
 1280 x 720  =>  1.5 * 1920x1080
 
 
+---------------
+Collision Info
+---------------
+* For this game, I wanted to manually control all rotations and positioning.
+* To bypass the built-in Physics simulation, set Rigidbody2D BodyType to Kinematic.
+* When using Kinematic, in order to detect collisions, the object Colliders MUST be set to "Is Trigger".
+* Note: As long as one of the colliding objects are set to IsTrigger, then the colliding objects can use OnTriggerEnter2D.
+
+
