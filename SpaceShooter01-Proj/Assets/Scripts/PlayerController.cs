@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _moveSpeed;
+    [SerializeField] GameObject _shipExhaust;
 
     // Components
     Rigidbody2D _rigidbody2D;
@@ -25,11 +26,20 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Update Ship Visual Elements
+        UpdateShipExhaustVisual();
+
+        // Update Movement
         if(!_moveDirectionInput.Equals(Vector2.zero))
         {
+
             // Movement amount
             Vector2 moveAmount = _rigidbody2D.position + _moveDirectionInput * _moveSpeed * Time.fixedDeltaTime;
             _rigidbody2D.MovePosition(moveAmount);
+        }
+        else
+        {
+            // No movement. Hide the 
         }
 
         if(!_lookDirectionInput.Equals(Vector2.zero))
@@ -39,6 +49,12 @@ public class PlayerController : MonoBehaviour
             float rotateAngle = Vector2.Angle(Vector2.up, _lookDirectionInput) * flipValue;
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
         }
+    }
+
+    void UpdateShipExhaustVisual()
+    {
+        bool showShipExhaust = !_moveDirectionInput.Equals(Vector2.zero);
+        _shipExhaust.SetActive(showShipExhaust);
     }
 
     void OnMove(InputValue inputValue)
