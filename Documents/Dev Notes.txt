@@ -1,0 +1,35 @@
+==========================================
+Dev Notes
+==========================================
+
+----------------------
+Reference Resolutions
+----------------------
+* All Reference Resolutions used should be 16:9
+* Originally set Camera Reference Resolution to 160x90 and then 320x180.
+* However, these resolutions looked really bad when rotating to NON axis-aligned directions (extremely pixelated)
+* Once I increased the Reference Resolution to something much higher (e.g. 1280x720) then the rotated sprites looked much better.
+
+
+----------------------
+Ship Sprites
+----------------------
+* In the Ship Sprites asset, the player ships are facing upwards, while the enemy sprite assets are facing downwards.
+* In Unity 2D, the "forward" vector is actually Vector2.up (Vector3.forwards is the inward Z-direction of the camera)
+* When building the enemy ship sprites, add them to a child of an empty GameObject then rotate 180 degrees so they point up.
+
+
+-------------------------------
+16:9 Reference Resolution Info
+-------------------------------
+160  x 90   =>   12 * 1920x1080
+192  x 108  =>   10 * 1920x1080 
+240  x 135  =>    8 * 1920x1080
+320  x 180  =>    6 * 1920x1080
+384  x 216  =>    5 * 1920x1080
+480  x 270  =>    4 * 1920x1080
+640  x 360  =>    3 * 1920x1080
+960  x 540  =>    2 * 1920x1080
+1280 x 720  =>  1.5 * 1920x1080
+
+
