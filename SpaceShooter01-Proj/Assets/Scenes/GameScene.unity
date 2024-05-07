@@ -3372,6 +3372,37 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!1 &935242225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935242226}
+  m_Layer: 0
+  m_Name: '[Enemy Explosions]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &935242226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935242225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &939750724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6085,6 +6116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnemyShipParent>k__BackingField: {fileID: 1821046208}
   <PlayerProjectileParent>k__BackingField: {fileID: 1796463663}
+  <EnemyExplosionParent>k__BackingField: {fileID: 935242226}
   _explosionPrefabs:
   - {fileID: 5653276834163488851, guid: 86f86ae69a78648c6bc8c214812d1322, type: 3}
   - {fileID: 434229098087040788, guid: 9b6e6d9e677d54e048f24d04c3a12fb4, type: 3}
@@ -6485,6 +6517,7 @@ SceneRoots:
   - {fileID: 1477327694}
   - {fileID: 69267443}
   - {fileID: 1796463663}
+  - {fileID: 935242226}
   - {fileID: 1821046208}
   - {fileID: 914535458}
   - {fileID: 1616306989}

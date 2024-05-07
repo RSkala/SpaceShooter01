@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [field:SerializeField] public Transform EnemyShipParent { get; private set;}
     [field:SerializeField] public Transform PlayerProjectileParent { get; private set; }
+    [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
     [SerializeField] GameObject[] _explosionPrefabs;
 
     public static GameManager Instance { get; private set; }

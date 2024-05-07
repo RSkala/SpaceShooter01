@@ -76,7 +76,7 @@ public abstract class ProjectileBase : MonoBehaviour
             GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
             float randomRotation = Random.Range(0.0f, 360.0f);
             Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
-            GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation);
+            GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation, GameManager.Instance.EnemyExplosionParent);
 
             // Destroy this projectile
             Destroy(gameObject);
