@@ -1024,6 +1024,7 @@ GameObject:
   - component: {fileID: 342808734}
   - component: {fileID: 342808736}
   - component: {fileID: 342808735}
+  - component: {fileID: 342808737}
   m_Layer: 0
   m_Name: Game Border L
   m_TagString: Untagged
@@ -1143,6 +1144,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &342808737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342808733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e4df4e1242c487caee6eed66f194e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &374689738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1405,7 @@ GameObject:
   - component: {fileID: 478358181}
   - component: {fileID: 478358183}
   - component: {fileID: 478358182}
+  - component: {fileID: 478358184}
   m_Layer: 0
   m_Name: Game Border R
   m_TagString: Untagged
@@ -1511,6 +1525,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &478358184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478358180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e4df4e1242c487caee6eed66f194e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &484089479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2863,7 @@ GameObject:
   - component: {fileID: 899037381}
   - component: {fileID: 899037383}
   - component: {fileID: 899037382}
+  - component: {fileID: 899037384}
   m_Layer: 0
   m_Name: Game Border T
   m_TagString: Untagged
@@ -2956,6 +2983,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &899037384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899037380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e4df4e1242c487caee6eed66f194e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910823040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,6 +3006,7 @@ GameObject:
   - component: {fileID: 910823041}
   - component: {fileID: 910823043}
   - component: {fileID: 910823042}
+  - component: {fileID: 910823044}
   m_Layer: 0
   m_Name: Game Border B
   m_TagString: Untagged
@@ -3086,6 +3126,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &910823044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910823040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e4df4e1242c487caee6eed66f194e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &914535456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,6 +3248,21 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
   _firePointsPivot: {fileID: 1083617291}
+  movementContactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  _disableMouseLookInput: 0
 --- !u!114 &914535460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4505,6 +4572,21 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
   _firePointsPivot: {fileID: 0}
+  movementContactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  _disableMouseLookInput: 0
 --- !u!114 &1616306985
 MonoBehaviour:
   m_ObjectHideFlags: 0

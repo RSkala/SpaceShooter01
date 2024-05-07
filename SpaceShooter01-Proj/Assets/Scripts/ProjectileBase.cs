@@ -110,5 +110,11 @@ public abstract class ProjectileBase : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+
+        if(collision.gameObject.TryGetComponent<GameBorder>(out var gameBorder))
+        {
+            // This projectile collided with a GameBorder. Destroy the projectile.
+            Destroy(gameObject);
+        }
     }
 }
