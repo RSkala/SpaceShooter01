@@ -140,14 +140,33 @@ public class PlayerController : MonoBehaviour
         _shipExhaust.SetActive(showShipExhaust);
     }
 
-    void OnMove(InputValue inputValue)
+    void OnLeftStickMove(InputValue inputValue)
     {
         _movementDirectionInput = inputValue.Get<Vector2>();
+
+        // Hide the Crosshair
+        CrosshairController.Instance.HideCrosshair();
     }
+
+    void OnWASDMove(InputValue inputValue)
+    {
+        _movementDirectionInput = inputValue.Get<Vector2>();
+
+        // Show the Crosshair
+        CrosshairController.Instance.ShowCrosshair();
+    }
+
+    // void OnMove(InputValue inputValue) // RKS: MARKED FOR DEATH
+    // {
+    //     _movementDirectionInput = inputValue.Get<Vector2>();
+    // }
 
     void OnLook(InputValue inputValue)
     {
         _rightStickLookDirectionInput = inputValue.Get<Vector2>();
+
+        // Hide the Crosshair
+        CrosshairController.Instance.HideCrosshair();
 
         // The player is using their gamepad's right thumbstick for aiming, so do not use mouse look for aiming
         _useMouseLook = false;
@@ -166,7 +185,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 mouseScreenPosition = inputValue.Get<Vector2>();
-        Debug.Log("OnMousePosition - mouseScreenPosition: " + mouseScreenPosition);
+        //Debug.Log("OnMousePosition - mouseScreenPosition: " + mouseScreenPosition);
 
         // Convert the mouse screen position to the position in the game world
         mouseScreenPosition.z = _mainCamera.nearClipPlane;
@@ -178,6 +197,9 @@ public class PlayerController : MonoBehaviour
 
         // Clear the lookInput (gamepad right thumbstick)
         _rightStickLookDirectionInput = Vector2.zero;
+
+        // Show the Crosshair
+        CrosshairController.Instance.ShowCrosshair();
     }
 
     void FireProjectile()
@@ -201,11 +223,11 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("PlayerController.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+        //Debug.Log("PlayerController.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("PlayerController.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+        //Debug.Log("PlayerController.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
     }
 }
