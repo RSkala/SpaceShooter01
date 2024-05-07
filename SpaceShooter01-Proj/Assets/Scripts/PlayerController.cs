@@ -246,7 +246,10 @@ public class PlayerController : MonoBehaviour
         foreach(Transform firePoint in _firePoints)
         {
             // Always fire the first projectile straight from the weapon firepoint
-            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab, firePoint.position, currentFirePointPivotRotation);
+            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab,
+                                                                  firePoint.position,
+                                                                  currentFirePointPivotRotation,
+                                                                  GameManager.Instance.PlayerProjectileParent);
         }
 
         // Play a fire sound
