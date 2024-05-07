@@ -12,15 +12,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _projectileShotsPerSecond;
     [SerializeField] Transform _firePointsPivot;
 
+    [Header("Debug")]
+    [SerializeField] bool _disableMouseLookInput; // This is used for object position adjustment without the mouse look interfering.
+
     // Components
     Rigidbody2D _rigidbody2D;
     PlayerInput _playerInput;
 
     // Input
-    Vector2 _moveDirectionInput;
-    Vector2 _lookDirectionInput;
+    Vector2 _movementDirectionInput; // Left stick or WASD move direction input
+    Vector2 _rightStickLookDirectionInput; // Right stick look direction input
+    Vector2 _mouseLookDirectionInput; // Ship to mouse position
 
     InputAction _fireInputAction; // TODO: Ensure this works when switching from UI to Gameplay
+    bool _useMouseLook;
+    Camera _mainCamera;
 
     // Weapons
     float _fireRate;
@@ -30,8 +36,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        // Initialize Components
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
+
+        _mainCamera = Camera.main;
 
         // Input
         _fireInputAction = _playerInput.actions["Fire"];
@@ -46,33 +55,32 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Fire projectiles if Fire button is held down
-        // if(_fireInputAction.IsPressed())
-        // {
-        //     //Debug.Log("Fire Projectiles Now!");
-        //     _timeSinceLastShot += Time.deltaTime;
-        //     if(_timeSinceLastShot >= _fireRate)
-        //     {
-        //         // Fire projectile/projectiles (WIP)
-        //         FireProjectile();
-        //         _timeSinceLastShot = 0.0f;
-        //     }
-        // }
-
-        // Update right stick firing
-        if(!_lookDirectionInput.Equals(Vector2.zero))
+        if(_fireInputAction.IsPressed())
         {
             _timeSinceLastShot += Time.deltaTime;
             if(_timeSinceLastShot >= _fireRate)
             {
-                // Fire projectile/projectiles (WIP)
+                // Fire projectile/projectiles
                 FireProjectile();
                 _timeSinceLastShot = 0.0f;
             }
         }
-        else
+
+        // Update right stick firing
+        if(!_rightStickLookDirectionInput.Equals(Vector2.zero))
         {
-            ResetTimeSinceLastShot();
+            _timeSinceLastShot += Time.deltaTime;
+            if(_timeSinceLastShot >= _fireRate)
+            {
+                // Fire projectile/projectiles
+                FireProjectile();
+                _timeSinceLastShot = 0.0f;
+            }
         }
+        // else
+        // {
+        //     ResetTimeSinceLastShot();
+        // }
     }
 
     void FixedUpdate()
@@ -81,23 +89,38 @@ public class PlayerController : MonoBehaviour
         UpdateShipExhaustVisual();
 
         // Update Movement
-        if(!_moveDirectionInput.Equals(Vector2.zero))
+        if(!_movementDirectionInput.Equals(Vector2.zero))
         {
             // Movement amount
-            Vector2 moveAmount = _rigidbody2D.position + _moveDirectionInput * _moveSpeed * Time.fixedDeltaTime;
+            Vector2 moveAmount = _rigidbody2D.position + _movementDirectionInput * _moveSpeed * Time.fixedDeltaTime;
             _rigidbody2D.MovePosition(moveAmount);
 
-            // Update the Look Direction. Note that this is expected to be overwritten later if the player has any look direction input.
-            float rotateAngle = CalculateRotationAngleFromInputDirection(_moveDirectionInput);
+            // Update the Look Direction so the ship is facing the movement direction
+            float rotateAngle = CalculateRotationAngleFromInputDirection(_movementDirectionInput);
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
         }
 
         // Update Look Direction
-        if(!_lookDirectionInput.Equals(Vector2.zero))
+        if(!_rightStickLookDirectionInput.Equals(Vector2.zero))
         {
-            float rotateAngle = CalculateRotationAngleFromInputDirection(_lookDirectionInput);
-            //transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+            // Rotate the fire points to face the aiming direction
+            float rotateAngle = CalculateRotationAngleFromInputDirection(_rightStickLookDirectionInput);
             _firePointsPivot.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+        }
+        else
+        {
+            if(_useMouseLook)
+            {
+                // Get the direction from the player's ship to the mouse position
+                Vector2 shipPos = _rigidbody2D.position;
+                Vector2 dirShipPosToMousePos = (_mouseLookDirectionInput - shipPos).normalized;
+
+                // Get the Signed Angle from the World-Up to the direction
+                float rotateAngle = CalculateRotationAngleFromInputDirection(dirShipPosToMousePos);
+
+                // Rotate the fire points to face the aiming direction
+                _firePointsPivot.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+            }
         }
     }
 
@@ -106,29 +129,55 @@ public class PlayerController : MonoBehaviour
         Vector3 cross = Vector3.Cross(Vector2.up, inputDirection);
         float flipValue = cross.z < 0.0f ? -1.0f : 1.0f;
         float rotateAngle = Vector2.Angle(Vector2.up, inputDirection) * flipValue;
-        //float rotateAngle = Vector2.SignedAngle(Vector2.up, inputDirection);
+        //float rotateAngle = Vector2.SignedAngle(Vector2.up, inputDirection); // Alternate method 1
+        //float rotateAngle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg - 90.0f; // Alternate method 2
         return rotateAngle;
     }
 
     void UpdateShipExhaustVisual()
     {
-        bool showShipExhaust = !_moveDirectionInput.Equals(Vector2.zero);
+        bool showShipExhaust = !_movementDirectionInput.Equals(Vector2.zero);
         _shipExhaust.SetActive(showShipExhaust);
     }
 
     void OnMove(InputValue inputValue)
     {
-        _moveDirectionInput = inputValue.Get<Vector2>();
+        _movementDirectionInput = inputValue.Get<Vector2>();
     }
 
     void OnLook(InputValue inputValue)
     {
-        _lookDirectionInput = inputValue.Get<Vector2>();
+        _rightStickLookDirectionInput = inputValue.Get<Vector2>();
+
+        // The player is using their gamepad's right thumbstick for aiming, so do not use mouse look for aiming
+        _useMouseLook = false;
     }
 
     void OnFire(InputValue inputValue)
     {
         //Debug.Log("OnFire");
+    }
+
+    void OnMousePosition(InputValue inputValue)
+    {
+        if(_disableMouseLookInput)
+        {
+            return;
+        }
+
+        Vector3 mouseScreenPosition = inputValue.Get<Vector2>();
+        Debug.Log("OnMousePosition - mouseScreenPosition: " + mouseScreenPosition);
+
+        // Convert the mouse screen position to the position in the game world
+        mouseScreenPosition.z = _mainCamera.nearClipPlane;
+        Vector3 mouseWorldPoint = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+        _mouseLookDirectionInput = mouseWorldPoint;
+
+        // The player has moved their mouse, so use mouse look for the player's gun direction
+        _useMouseLook = true;
+
+        // Clear the lookInput (gamepad right thumbstick)
+        _rightStickLookDirectionInput = Vector2.zero;
     }
 
     void FireProjectile()
