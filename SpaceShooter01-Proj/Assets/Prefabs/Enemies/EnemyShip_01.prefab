@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1885135439769598184}
   - component: {fileID: 4651011076302353351}
   - component: {fileID: 6436944088096808305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyShip_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

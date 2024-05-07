@@ -12,6 +12,6 @@ public class GameBorder : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("GameBorder.OnCollisionEnter2D - " + name + ", collision: " + collision.gameObject.name);
+        //Debug.Log("GameBorder.OnCollisionEnter2D - " + name + ", collision: " + collision.gameObject.name);
     }
 }

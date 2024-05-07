@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _projectileShotsPerSecond;
     [SerializeField] Transform _firePointsPivot;
 
+    [Header("Movement Collision")]
+    [SerializeField] ContactFilter2D movementContactFilter;
+    [SerializeField] float collisionOffset; // Offset for movement raycast
+
     [Header("Debug")]
     [SerializeField] bool _disableMouseLookInput; // This is used for object position adjustment without the mouse look interfering.
 
@@ -27,6 +31,10 @@ public class PlayerController : MonoBehaviour
     InputAction _fireInputAction; // TODO: Ensure this works when switching from UI to Gameplay
     bool _useMouseLook;
     Camera _mainCamera;
+
+    // Movement Collision
+    List<RaycastHit2D> _movementRaycastHitsXDir = new();
+    List<RaycastHit2D> _movementRaycastHitsYDir = new();
 
     // Weapons
     float _fireRate;
@@ -91,9 +99,33 @@ public class PlayerController : MonoBehaviour
         // Update Movement
         if(!_movementDirectionInput.Equals(Vector2.zero))
         {
-            // Movement amount
-            Vector2 moveAmount = _rigidbody2D.position + _movementDirectionInput * _moveSpeed * Time.fixedDeltaTime;
-            _rigidbody2D.MovePosition(moveAmount);
+            // Check collision against walls in the X direction
+            int raycastCollisionCountXDir = _rigidbody2D.Cast
+            (
+                new Vector2(_movementDirectionInput.x, 0.0f),
+                movementContactFilter,
+                _movementRaycastHitsXDir,
+                _moveSpeed * Time.fixedDeltaTime + collisionOffset
+            );
+
+            // Check collision against walls in the Y direction
+            int raycastCollisionCountYDir = _rigidbody2D.Cast
+            (
+                new Vector2(0.0f, _movementDirectionInput.y),
+                movementContactFilter,
+                _movementRaycastHitsYDir,
+                _moveSpeed * Time.fixedDeltaTime + collisionOffset
+            );
+
+            // Create a new modified movement direction, depending on whether the player's ship collided with walls/borders.
+            // Separating into two separate raycasts allows the player to "slide" along the wall in a non-collided direction.
+            float modifiedMoveInputX = raycastCollisionCountXDir == 0 ? _movementDirectionInput.x : 0.0f;
+            float modifiedMoveInputY = raycastCollisionCountYDir == 0 ? _movementDirectionInput.y : 0.0f;
+            Vector2 modifiedMovementDirection = new(modifiedMoveInputX, modifiedMoveInputY);
+
+            // Move to the new position
+            Vector2 newPosition = _rigidbody2D.position + modifiedMovementDirection * _moveSpeed * Time.fixedDeltaTime;
+            _rigidbody2D.MovePosition(newPosition);
 
             // Update the Look Direction so the ship is facing the movement direction
             float rotateAngle = CalculateRotationAngleFromInputDirection(_movementDirectionInput);

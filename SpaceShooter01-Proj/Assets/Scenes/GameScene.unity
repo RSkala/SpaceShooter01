@@ -357,6 +357,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_02 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5512903564434558526, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.34
@@ -963,6 +967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_03 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6972951675446601004, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.45
@@ -1025,7 +1033,7 @@ GameObject:
   - component: {fileID: 342808736}
   - component: {fileID: 342808735}
   - component: {fileID: 342808737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Game Border L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1406,7 +1414,7 @@ GameObject:
   - component: {fileID: 478358183}
   - component: {fileID: 478358182}
   - component: {fileID: 478358184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Game Border R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1912,6 +1920,10 @@ PrefabInstance:
     - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_Name
       value: EnemyShip_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5512903564434558526, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2572,6 +2584,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.54
@@ -2864,7 +2880,7 @@ GameObject:
   - component: {fileID: 899037383}
   - component: {fileID: 899037382}
   - component: {fileID: 899037384}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Game Border T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3007,7 +3023,7 @@ GameObject:
   - component: {fileID: 910823043}
   - component: {fileID: 910823042}
   - component: {fileID: 910823044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Game Border B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3149,10 +3165,10 @@ GameObject:
   - component: {fileID: 914535458}
   - component: {fileID: 914535457}
   - component: {fileID: 914535462}
-  - component: {fileID: 914535461}
+  - component: {fileID: 914535463}
   - component: {fileID: 914535460}
   - component: {fileID: 914535459}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerShip_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3250,18 +3266,19 @@ MonoBehaviour:
   _firePointsPivot: {fileID: 1083617291}
   movementContactFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 1024
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  collisionOffset: 0.02
   _disableMouseLookInput: 0
 --- !u!114 &914535460
 MonoBehaviour:
@@ -3293,8 +3310,35 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!61 &914535461
-BoxCollider2D:
+--- !u!50 &914535462
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914535456}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &914535463
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3326,45 +3370,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!50 &914535462
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914535456}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Radius: 0.5
 --- !u!1001 &939750724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3632,6 +3639,10 @@ PrefabInstance:
     - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_Name
       value: EnemyShip_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3953,6 +3964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.31
@@ -4131,6 +4146,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.64
@@ -4226,6 +4245,10 @@ PrefabInstance:
     - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_Name
       value: EnemyShip_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6972951675446601004, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4419,6 +4442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_03 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6972951675446601004, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.9
@@ -4480,6 +4507,10 @@ PrefabInstance:
     - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_Name
       value: EnemyShip_03 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078743401263551487, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6972951675446601004, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4586,6 +4617,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  collisionOffset: 0.05
   _disableMouseLookInput: 0
 --- !u!114 &1616306985
 MonoBehaviour:
@@ -5174,6 +5206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5512903564434558526, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.4
@@ -5266,6 +5302,10 @@ PrefabInstance:
     - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_Name
       value: EnemyShip_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5423,6 +5463,10 @@ PrefabInstance:
     - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_Name
       value: EnemyShip_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5654,6 +5698,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 875545838050638264, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5271887659385061307, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.31
@@ -5799,6 +5847,10 @@ PrefabInstance:
     - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_Name
       value: EnemyShip_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184659911315262003, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5512903564434558526, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
       propertyPath: m_LocalPosition.x
