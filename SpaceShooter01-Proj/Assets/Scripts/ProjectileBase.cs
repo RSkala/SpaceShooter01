@@ -61,7 +61,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ProjectileBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+        //Debug.Log("ProjectileBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
 
         if(other.TryGetComponent<EnemyShipBase>(out var enemyShip))
         {
@@ -109,7 +109,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+        //Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
 
         if(collision.gameObject.TryGetComponent<GameBorder>(out var gameBorder))
         {

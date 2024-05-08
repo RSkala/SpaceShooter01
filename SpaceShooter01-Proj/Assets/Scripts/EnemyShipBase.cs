@@ -46,11 +46,11 @@ public abstract class EnemyShipBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("EnemyShipBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+        //Debug.Log("EnemyShipBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("EnemyShipBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+        //Debug.Log("EnemyShipBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
     }
 }
