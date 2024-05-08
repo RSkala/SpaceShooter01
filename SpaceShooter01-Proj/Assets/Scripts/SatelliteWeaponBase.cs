@@ -39,7 +39,7 @@ public abstract class SatelliteWeaponBase : MonoBehaviour
     void FixedUpdate()
     {
         // Multiply the rotation angle by 1 or -1 depending on direction
-        float rotationDirMultiple = _rotationDirection == RotationDirection.Clockwise ? 1.0f : -1.0f;
+        float rotationDirMultiple = _rotationDirection == RotationDirection.Clockwise ? -1.0f : 1.0f;
 
         // Increment the rotation angle in the desired rotation direction
         _curRotationAngle += _rotationSpeed * Time.fixedDeltaTime * rotationDirMultiple;
