@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] _explosionPrefabs;
     [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
 
+    [Header("Pickup Items")]
+    [SerializeField] PickupItemScoreMultiplier _pickupItemScoreMultiplierPrefab;
+    [SerializeField, Range(0.0f, 1.0f)] float _scoreMultiplierDropChance; // Currently there are too many on screen. This reduces the visual cacophony.
+
     [Header("UI")]
     [SerializeField] TMP_Text _scoreText;
     [SerializeField] TMP_Text _multiplierText;
@@ -39,6 +43,7 @@ public class GameManager : MonoBehaviour
     long _numEnemiesDestroyed = 0; // Internal count of how many enemies were destroyed
     long _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
     long _currentScoreMultiplier = 1; // Increase this value by 1 each time a player picks up a multiplier item (TODO)
+    long _numCollectedScoreMultipliers = 0;
 
     // First implementation: Each enemy has a score value of 1. 
     const int ENEMY_SCORE_VALUE = 1;
@@ -70,6 +75,7 @@ public class GameManager : MonoBehaviour
         _numEnemiesDestroyed = 0;
         _currentScore = 0;
         _currentScoreMultiplier = 1;
+        _numCollectedScoreMultipliers = 0;
         UpdateScoreAndMultiplierText();
     }
 
@@ -139,7 +145,7 @@ public class GameManager : MonoBehaviour
         return inactivePlayerBasicProjectile;
     }
 
-    public void OnEnemyDestroyed()
+    public void OnEnemyDestroyed(GameObject destroyedEnemyGameObject)
     {
         // Increment the number of enemies destroyed
         _numEnemiesDestroyed++;
@@ -150,6 +156,9 @@ public class GameManager : MonoBehaviour
 
         // Update UI
         UpdateScoreAndMultiplierText();
+
+        // Spawn Score Multiplier at enemy position
+        SpawnScoreMultiplierPickup(destroyedEnemyGameObject.transform.position);    
     }
 
     void UpdateScoreAndMultiplierText()
@@ -159,5 +168,22 @@ public class GameManager : MonoBehaviour
 
         string formattedMultiplierString = string.Format(CultureInfo.InvariantCulture, "x {0:N0}", _currentScoreMultiplier);
         _multiplierText.text = formattedMultiplierString;
+    }
+
+    public void OnScoreMultiplierCollected()
+    {
+        _numCollectedScoreMultipliers++;
+        _currentScoreMultiplier++;
+        UpdateScoreAndMultiplierText();
+    }
+
+    public void SpawnScoreMultiplierPickup(Vector2 position)
+    {
+        // Use a random chance to determine score multiplier drops
+        float randomChance = Random.Range(0.0f, 1.0f);
+        if(randomChance <= _scoreMultiplierDropChance)
+        {
+            GameObject.Instantiate(_pickupItemScoreMultiplierPrefab, position, Quaternion.identity);
+        }
     }
 }

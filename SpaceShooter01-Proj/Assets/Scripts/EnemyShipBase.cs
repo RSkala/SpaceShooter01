@@ -57,7 +57,7 @@ public abstract class EnemyShipBase : MonoBehaviour
     public virtual void DestroyEnemy()
     {
         // Notify the GameManager
-        GameManager.Instance.OnEnemyDestroyed();
+        GameManager.Instance.OnEnemyDestroyed(gameObject);
 
         // Destroy the owning gameObject
         Destroy(gameObject);
