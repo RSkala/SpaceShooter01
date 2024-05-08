@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using TMPro;
@@ -35,9 +36,9 @@ public class GameManager : MonoBehaviour
     List<ParticleSystem> _borderImpactEffectPool = new();
     List<ProjectileBulletStraight> _playerBasicProjectilePool = new();
 
-    int _numEnemiesDestroyed = 0; // Internal count of how many enemies were destroyed
-    int _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
-    int _currentScoreMultiplier = 1; // Increase this value by 1 each time a player picks up a multiplier item (TODO)
+    long _numEnemiesDestroyed = 0; // Internal count of how many enemies were destroyed
+    long _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
+    long _currentScoreMultiplier = 1; // Increase this value by 1 each time a player picks up a multiplier item (TODO)
 
     // First implementation: Each enemy has a score value of 1. 
     const int ENEMY_SCORE_VALUE = 1;
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
         _numEnemiesDestroyed++;
 
         // Increase the score
-        int scoreToAdd = ENEMY_SCORE_VALUE * _currentScoreMultiplier;
+        long scoreToAdd = ENEMY_SCORE_VALUE * _currentScoreMultiplier;
         _currentScore += scoreToAdd;
 
         // Update UI
@@ -153,7 +154,10 @@ public class GameManager : MonoBehaviour
 
     void UpdateScoreAndMultiplierText()
     {
-        _scoreText.text = _currentScore.ToString(); // TODO: Format string with separators
-        _multiplierText.text = "x " + _currentScoreMultiplier.ToString();
+        string formattedScoreString = string.Format(CultureInfo.InvariantCulture, "{0:N0}", _currentScore);
+        _scoreText.text = formattedScoreString;
+
+        string formattedMultiplierString = string.Format(CultureInfo.InvariantCulture, "x {0:N0}", _currentScoreMultiplier);
+        _multiplierText.text = formattedMultiplierString;
     }
 }
