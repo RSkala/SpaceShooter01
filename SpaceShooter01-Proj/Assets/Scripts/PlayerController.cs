@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ProjectileBase _projectilePrefab;
     [SerializeField] float _projectileShotsPerSecond;
     [SerializeField] Transform _firePointsPivot;
+    [SerializeField] SatelliteWeaponBase _currentSatelliteWeapon;
 
     [Header("Movement Collision")]
     [SerializeField] ContactFilter2D movementContactFilter;
@@ -59,6 +60,12 @@ public class PlayerController : MonoBehaviour
 
         // Initialize "time since last shot" to the fire rate, so there is no delay on the very first shot
         ResetTimeSinceLastShot();
+
+        // Init Satellite Weapon
+        if(_currentSatelliteWeapon != null)
+        {
+            _currentSatelliteWeapon.Init(_rigidbody2D);
+        }
     }
 
     void Update()
@@ -133,6 +140,9 @@ public class PlayerController : MonoBehaviour
             // Update the Look Direction so the ship is facing the movement direction
             float rotateAngle = CalculateRotationAngleFromInputDirection(_movementDirectionInput);
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+
+            // Use the player ship's look direction for the satellite weapon rotation (This could be overridden by firing direction)
+            UpdateSatelliteWeaponRotation(rotateAngle);
         }
 
         // Update Look Direction
@@ -141,6 +151,9 @@ public class PlayerController : MonoBehaviour
             // Rotate the fire points to face the aiming direction
             float rotateAngle = CalculateRotationAngleFromInputDirection(_rightStickLookDirectionInput);
             _firePointsPivot.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+
+            // The player is firing using the right stick. Use the firing direction for the satellite weapon rotation.
+            UpdateSatelliteWeaponRotation(rotateAngle);
         }
         else
         {
@@ -155,6 +168,9 @@ public class PlayerController : MonoBehaviour
 
                 // Rotate the fire points to face the aiming direction
                 _firePointsPivot.rotation = Quaternion.Euler(0.0f, 0.0f, rotateAngle);
+
+                // The player is firing using the mouse. Use the firing direction for the satellite weapon rotation.
+                UpdateSatelliteWeaponRotation(rotateAngle);
             }
         }
     }
@@ -257,6 +273,9 @@ public class PlayerController : MonoBehaviour
 
         // Play a fire sound
         AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.PlayerShot);
+
+        // Fire a Projectile from a satellite weapon (if the player has one)
+        FireProjectileFromSatelliteWeapon();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -288,6 +307,27 @@ public class PlayerController : MonoBehaviour
             Vector2 raycastNormal = _movementRaycastHitsDebug[0].normal;
 
             Debug.DrawLine(raycastHitPos, raycastHitPos + raycastNormal * 5.0f, Color.magenta);
+        }
+    }
+
+    void UpdateSatelliteWeaponRotation(float rotation)
+    {
+        if(_currentSatelliteWeapon != null)
+        {
+            _currentSatelliteWeapon.SetRotation(rotation);
+        }
+    }
+
+    void FireProjectileFromSatelliteWeapon()
+    {
+        // Fire a bullet from the satellite weapon, if enabled. Do not play a sound, as a sound was already played when the weapon was fired.
+        if(_currentSatelliteWeapon != null)
+        {
+            // Always fire the first projectile straight from the weapon firepoint
+            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab,
+                                                                  _currentSatelliteWeapon.GetPosition,
+                                                                  _firePointsPivot.rotation,
+                                                                  GameManager.Instance.PlayerProjectileParent);
         }
     }
 }
