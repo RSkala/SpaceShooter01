@@ -115,6 +115,16 @@ public abstract class ProjectileBase : MonoBehaviour
         {
             // This projectile collided with a GameBorder. Destroy the projectile.
             Destroy(gameObject);
+
+            // Get the collision contact position
+            ContactPoint2D collisionContact = collision.GetContact(0);
+            Vector2 collisionContactPos = collisionContact.point;
+
+            // Play border impact particle at the collision position
+            ParticleSystem borderImpactParticle = GameManager.Instance.GetInactiveBorderImpactEffect();
+            borderImpactParticle.transform.position = collisionContactPos;
+            borderImpactParticle.gameObject.SetActive(true);
+            borderImpactParticle.Play();
         }
     }
 }
