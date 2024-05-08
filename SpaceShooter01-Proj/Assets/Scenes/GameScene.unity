@@ -4295,6 +4295,7 @@ Transform:
   - {fileID: 2040285430}
   - {fileID: 1031072580}
   - {fileID: 528048999}
+  - {fileID: 1982640003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1430832575
@@ -5945,6 +5946,57 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1982640002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1982640003}
+  - component: {fileID: 1982640004}
+  m_Layer: 0
+  m_Name: EnemySpawnController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1982640003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982640002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1418834845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1982640004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982640002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c612f8a5c5b462e9fe5df427034833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemySpawnInfoArray:
+  - <EnemyShipPrefab>k__BackingField: {fileID: 6436944088096808305, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
+    <TimeBetweenSpawns>k__BackingField: 1
+  - <EnemyShipPrefab>k__BackingField: {fileID: 9019146126435365731, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
+    <TimeBetweenSpawns>k__BackingField: 2
+  - <EnemyShipPrefab>k__BackingField: {fileID: 1831814516692264463, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
+    <TimeBetweenSpawns>k__BackingField: 3
 --- !u!1001 &1983149746
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -241,6 +241,7 @@ public class PlayerController : MonoBehaviour
         // Convert the mouse screen position to the position in the game world
         mouseScreenPosition.z = _mainCamera.nearClipPlane;
         Vector3 mouseWorldPoint = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+        //Debug.Log("OnMousePosition - mouseWorldPoint: " + mouseWorldPoint);
         _mouseLookDirectionInput = mouseWorldPoint;
 
         // The player has moved their mouse, so use mouse look for the player's gun direction
