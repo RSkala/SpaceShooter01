@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,10 @@ public class GameManager : MonoBehaviour
     [Header("Explosions")]
     [SerializeField] GameObject[] _explosionPrefabs;
     [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
+
+    [Header("UI")]
+    [SerializeField] TMP_Text _scoreText;
+    [SerializeField] TMP_Text _multiplierText;
 
     const int MAX_BORDER_IMPACT_EFFECTS = 75;
     const int MAX_PLAYER_BASIC_PROJECTILES = 100;
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
         _numEnemiesDestroyed = 0;
         _currentScore = 0;
         _currentScoreMultiplier = 1;
+        UpdateScoreAndMultiplierText();
     }
 
     void InitPools()
@@ -141,8 +147,13 @@ public class GameManager : MonoBehaviour
         int scoreToAdd = ENEMY_SCORE_VALUE * _currentScoreMultiplier;
         _currentScore += scoreToAdd;
 
-        Debug.Log("--");
-        Debug.Log("_numEnemiesDestroyed: " + _numEnemiesDestroyed);
-        Debug.Log("_currentScore: " + _currentScore);
+        // Update UI
+        UpdateScoreAndMultiplierText();
+    }
+
+    void UpdateScoreAndMultiplierText()
+    {
+        _scoreText.text = _currentScore.ToString(); // TODO: Format string with separators
+        _multiplierText.text = "x " + _currentScoreMultiplier.ToString();
     }
 }
