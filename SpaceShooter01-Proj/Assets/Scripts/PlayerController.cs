@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("PlayerController.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+        //Debug.Log("PlayerController.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
