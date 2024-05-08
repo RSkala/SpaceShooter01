@@ -265,10 +265,10 @@ public class PlayerController : MonoBehaviour
         foreach(Transform firePoint in _firePoints)
         {
             // Always fire the first projectile straight from the weapon firepoint
-            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab,
-                                                                  firePoint.position,
-                                                                  currentFirePointPivotRotation,
-                                                                  GameManager.Instance.PlayerProjectileParent);
+            ProjectileBase projectile = GameManager.Instance.GetInactiveBasicPlayerProjectile();
+            projectile.transform.position = firePoint.position;
+            projectile.transform.rotation = currentFirePointPivotRotation;
+            projectile.Activate();
         }
 
         // Play a fire sound
@@ -323,11 +323,11 @@ public class PlayerController : MonoBehaviour
         // Fire a bullet from the satellite weapon, if enabled. Do not play a sound, as a sound was already played when the weapon was fired.
         if(_currentSatelliteWeapon != null)
         {
-            // Always fire the first projectile straight from the weapon firepoint
-            ProjectileBase newProjectile = GameObject.Instantiate(_projectilePrefab,
-                                                                  _currentSatelliteWeapon.GetPosition,
-                                                                  _firePointsPivot.rotation,
-                                                                  GameManager.Instance.PlayerProjectileParent);
+            // Fire the projectile straight from the satellite position in the same direction as the fire point pivot
+            ProjectileBase projectile = GameManager.Instance.GetInactiveBasicPlayerProjectile();
+            projectile.transform.position = _currentSatelliteWeapon.GetPosition;
+            projectile.transform.rotation = _firePointsPivot.rotation;
+            projectile.Activate();
         }
     }
 }

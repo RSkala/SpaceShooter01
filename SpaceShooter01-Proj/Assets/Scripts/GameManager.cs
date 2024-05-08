@@ -6,18 +6,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [field:Header("Enemy Ships")]
     [field:SerializeField] public Transform EnemyShipParent { get; private set;}
-    [field:SerializeField] public Transform PlayerProjectileParent { get; private set; }
-    [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
-    [field:SerializeField] public ParticleSystem BorderImpactEffectPrefab { get; private set; }
+    
+    [Header("Border Impacts")]
     [SerializeField] Transform BorderImpactEffectParent;
-    [SerializeField] GameObject[] _explosionPrefabs;
+    [field:SerializeField] public ParticleSystem BorderImpactEffectPrefab { get; private set; }
 
-    const int MAX_BORDER_IMPACT_EFFECTS = 100;
+    [Header("Player Projectiles")]
+    [SerializeField] Transform PlayerBasicProjectileParent;
+    [field:SerializeField] public Transform PlayerProjectileParent { get; private set; }
+    [field:SerializeField] public ProjectileBulletStraight PlayerBasicProjectilePrefab { get; private set; } 
+
+    [Header("Explosions")]
+    [SerializeField] GameObject[] _explosionPrefabs;
+    [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
+
+    const int MAX_BORDER_IMPACT_EFFECTS = 75;
+    const int MAX_PLAYER_BASIC_PROJECTILES = 100;
 
     public static GameManager Instance { get; private set; }
 
     List<ParticleSystem> _borderImpactEffectPool = new();
+    List<ProjectileBulletStraight> _playerBasicProjectilePool = new();
 
     void Awake()
     {
@@ -31,13 +42,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitBorderImpactEffectPool();
+        InitPools();
     }
     
     public GameObject GetRandomExplosionPrefab()
     {
         int randomIdx = Random.Range(0, _explosionPrefabs.Length);
         return _explosionPrefabs[randomIdx];
+    }
+
+    void InitPools()
+    {
+        InitBorderImpactEffectPool();
+        InitPlayerBasicProjectilePool();
     }
 
     void InitBorderImpactEffectPool()
@@ -50,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     ParticleSystem CreateAndAddNewBorderImpactEffect()
     {
-        ParticleSystem borderImpactParticle = GameObject.Instantiate<ParticleSystem>(GameManager.Instance.BorderImpactEffectPrefab, BorderImpactEffectParent);
+        ParticleSystem borderImpactParticle = GameObject.Instantiate<ParticleSystem>(BorderImpactEffectPrefab, BorderImpactEffectParent);
         borderImpactParticle.name = "BorderImpactEffect-" + _borderImpactEffectPool.Count;
         borderImpactParticle.gameObject.SetActive(false);
         ParticleSystem.MainModule particleMainModule = borderImpactParticle.main;
@@ -70,5 +87,33 @@ public class GameManager : MonoBehaviour
             inactiveBorderImpactEffect = CreateAndAddNewBorderImpactEffect();
         }
         return inactiveBorderImpactEffect;
+    }
+
+    void InitPlayerBasicProjectilePool()
+    {
+        for(int i = 0; i < MAX_PLAYER_BASIC_PROJECTILES; ++i)
+        {
+            CreateAndAddNewBasicPlayerProjectile();
+        }
+    }
+
+    ProjectileBulletStraight CreateAndAddNewBasicPlayerProjectile()
+    {
+        ProjectileBulletStraight playerBasicProjectile = GameObject.Instantiate<ProjectileBulletStraight>(PlayerBasicProjectilePrefab, PlayerBasicProjectileParent);
+        playerBasicProjectile.name = PlayerBasicProjectilePrefab.name + "-" + (_playerBasicProjectilePool.Count + 1);
+        playerBasicProjectile.gameObject.SetActive(false);
+        _playerBasicProjectilePool.Add(playerBasicProjectile);
+        return playerBasicProjectile;
+    }
+
+    public ProjectileBulletStraight GetInactiveBasicPlayerProjectile()
+    {
+        ProjectileBulletStraight inactivePlayerBasicProjectile = _playerBasicProjectilePool.FirstOrDefault(projectile => !projectile.gameObject.activeInHierarchy);
+        if(inactivePlayerBasicProjectile == null)
+        {
+            Debug.LogWarning("No available player basic projectile in the pool. Increase the pool size.");
+            inactivePlayerBasicProjectile = CreateAndAddNewBasicPlayerProjectile();
+        }
+        return inactivePlayerBasicProjectile;
     }
 }

@@ -8,6 +8,8 @@ public abstract class ProjectileBase : MonoBehaviour
     [field:SerializeField] public float Damage { get; protected set; }
     [field:SerializeField] public float LifetimeSeconds { get; protected set; }
 
+    public bool IsActive { get; protected set; }
+
     Rigidbody2D _rigidbody2D;
     float _timeAlive;
 
@@ -45,18 +47,18 @@ public abstract class ProjectileBase : MonoBehaviour
         Vector2 newPos = _rigidbody2D.position + movementDirection * MoveSpeed * Time.fixedDeltaTime;
         _rigidbody2D.MovePosition(newPos);
 
-        // Destroy owning GameObject if time alive has exceeded the lifetime
+        // Deactivate owning GameObject if time alive has exceeded the lifetime
         _timeAlive += Time.fixedDeltaTime;
         if(_timeAlive >= LifetimeSeconds)
         {
-            Destroy(gameObject);
+            Deactivate();
         }
     }
 
     public virtual void HandleCollisionWithEnemy()
     {
-        // Just destroy the projectile
-        Destroy(gameObject);
+        // Just deactivate the projectile
+        Deactivate();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -78,8 +80,8 @@ public abstract class ProjectileBase : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
             GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation, GameManager.Instance.EnemyExplosionParent);
 
-            // Destroy this projectile
-            Destroy(gameObject);
+            // Deactivate this projectile
+            Deactivate();
         }
         else
         {
@@ -113,8 +115,8 @@ public abstract class ProjectileBase : MonoBehaviour
 
         if(collision.gameObject.TryGetComponent<GameBorder>(out var gameBorder))
         {
-            // This projectile collided with a GameBorder. Destroy the projectile.
-            Destroy(gameObject);
+            // This projectile collided with a GameBorder. Deactivate the projectile.
+            Deactivate();
 
             // Get the collision contact position
             ContactPoint2D collisionContact = collision.GetContact(0);
@@ -126,5 +128,20 @@ public abstract class ProjectileBase : MonoBehaviour
             borderImpactParticle.gameObject.SetActive(true);
             borderImpactParticle.Play();
         }
+    }
+
+    //public void SetActive(bool active) => gameObject.SetActive(active);
+    public void Activate()
+    {
+        IsActive = true;
+        gameObject.SetActive(true);
+        _timeAlive = 0.0f;
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        gameObject.SetActive(false);
+        _timeAlive = 0.0f;
     }
 }

@@ -5595,7 +5595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1796463663}
   m_Layer: 0
-  m_Name: '[Player Projectiles]'
+  m_Name: '[Player Basic Projectiles]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6312,14 +6312,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EnemyShipParent>k__BackingField: {fileID: 1821046208}
-  <PlayerProjectileParent>k__BackingField: {fileID: 1796463663}
-  <EnemyExplosionParent>k__BackingField: {fileID: 935242226}
-  <BorderImpactEffectPrefab>k__BackingField: {fileID: 4775406517720461368, guid: 5a3d7805db60440ae915acefdce7cee1, type: 3}
   BorderImpactEffectParent: {fileID: 144928275}
+  <BorderImpactEffectPrefab>k__BackingField: {fileID: 4775406517720461368, guid: 5a3d7805db60440ae915acefdce7cee1, type: 3}
+  PlayerBasicProjectileParent: {fileID: 1796463663}
+  <PlayerProjectileParent>k__BackingField: {fileID: 1796463663}
+  <PlayerBasicProjectilePrefab>k__BackingField: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _explosionPrefabs:
   - {fileID: 5653276834163488851, guid: 86f86ae69a78648c6bc8c214812d1322, type: 3}
   - {fileID: 434229098087040788, guid: 9b6e6d9e677d54e048f24d04c3a12fb4, type: 3}
   - {fileID: 6346445428858607818, guid: 2f1be9543ff9c497097d86c64031a9fe, type: 3}
+  <EnemyExplosionParent>k__BackingField: {fileID: 935242226}
 --- !u!1 &2048750224
 GameObject:
   m_ObjectHideFlags: 0
