@@ -53,4 +53,13 @@ public abstract class EnemyShipBase : MonoBehaviour
     {
         //Debug.Log("EnemyShipBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
     }
+
+    public virtual void DestroyEnemy()
+    {
+        // Notify the GameManager
+        GameManager.Instance.OnEnemyDestroyed();
+
+        // Destroy the owning gameObject
+        Destroy(gameObject);
+    }
 }

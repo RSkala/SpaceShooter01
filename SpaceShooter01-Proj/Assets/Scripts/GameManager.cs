@@ -30,6 +30,13 @@ public class GameManager : MonoBehaviour
     List<ParticleSystem> _borderImpactEffectPool = new();
     List<ProjectileBulletStraight> _playerBasicProjectilePool = new();
 
+    int _numEnemiesDestroyed = 0; // Internal count of how many enemies were destroyed
+    int _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
+    int _currentScoreMultiplier = 1; // Increase this value by 1 each time a player picks up a multiplier item (TODO)
+
+    // First implementation: Each enemy has a score value of 1. 
+    const int ENEMY_SCORE_VALUE = 1;
+
     void Awake()
     {
         if(Instance != null)
@@ -42,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        InitScoreValues();
         InitPools();
     }
     
@@ -49,6 +57,13 @@ public class GameManager : MonoBehaviour
     {
         int randomIdx = Random.Range(0, _explosionPrefabs.Length);
         return _explosionPrefabs[randomIdx];
+    }
+
+    void InitScoreValues()
+    {
+        _numEnemiesDestroyed = 0;
+        _currentScore = 0;
+        _currentScoreMultiplier = 1;
     }
 
     void InitPools()
@@ -115,5 +130,19 @@ public class GameManager : MonoBehaviour
             inactivePlayerBasicProjectile = CreateAndAddNewBasicPlayerProjectile();
         }
         return inactivePlayerBasicProjectile;
+    }
+
+    public void OnEnemyDestroyed()
+    {
+        // Increment the number of enemies destroyed
+        _numEnemiesDestroyed++;
+
+        // Increase the score
+        int scoreToAdd = ENEMY_SCORE_VALUE * _currentScoreMultiplier;
+        _currentScore += scoreToAdd;
+
+        Debug.Log("--");
+        Debug.Log("_numEnemiesDestroyed: " + _numEnemiesDestroyed);
+        Debug.Log("_currentScore: " + _currentScore);
     }
 }

@@ -70,8 +70,8 @@ public abstract class ProjectileBase : MonoBehaviour
             // Get the enemy ship position before destroying
             Vector2 enemyShipPosition = enemyShip.transform.position;
 
-            // Temp: Destroy the enemy ship and play sound effect
-            Destroy(enemyShip.gameObject);
+            // Destroy the enemy ship and play sound effect
+            enemyShip.DestroyEnemy();
             AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.EnemyExplosion);
 
             // Show an explosion at the destruction position with a random rotation
@@ -82,30 +82,6 @@ public abstract class ProjectileBase : MonoBehaviour
 
             // Deactivate this projectile
             Deactivate();
-        }
-        else
-        {
-            // TEST: Check the parent -- TODO: Reorganize the hierarchy -- it's overly complicated. Just rotate the main object 180 degrees on spawn.
-            if(other.transform.parent != null)
-            {
-                if(other.transform.parent.TryGetComponent<EnemyShipBase>(out var enemyShip2))
-                {
-                    // Actually found the component on the parent...  Copy-paste incoming...
-
-                    // Get the enemy ship position before destroying
-                    Vector2 enemyShipPosition = enemyShip2.transform.position;
-
-                    // Temp: Destroy the enemy ship and play sound effect
-                    Destroy(enemyShip2.gameObject);
-                    AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.EnemyExplosion);
-
-                    // Show an explosion at the destruction position with a random rotation
-                    GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
-                    float randomRotation = Random.Range(0.0f, 360.0f);
-                    Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
-                    GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation);
-                }
-            }
         }
     }
 
