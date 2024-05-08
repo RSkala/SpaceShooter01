@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     // Movement Collision
     List<RaycastHit2D> _movementRaycastHitsXDir = new();
     List<RaycastHit2D> _movementRaycastHitsYDir = new();
+    List<RaycastHit2D> _movementRaycastHitsDebug = new();
 
     // Weapons
     float _fireRate;
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //UpdateMovementDebug();
+
         // Update Ship Visual Elements
         UpdateShipExhaustVisual();
 
@@ -264,5 +267,27 @@ public class PlayerController : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("PlayerController.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+    }
+
+    void UpdateMovementDebug()
+    {
+        Debug.DrawLine(transform.position, transform.position + transform.up * 10.0f, Color.cyan);
+
+        int raycastCollisionCountForward = _rigidbody2D.Cast
+        (
+            transform.up,
+            movementContactFilter,
+            _movementRaycastHitsDebug,
+            10.0f
+        );
+
+        if(raycastCollisionCountForward > 0)
+        {
+            Debug.Log("Num collisions - " + raycastCollisionCountForward);
+            Vector2 raycastHitPos = _movementRaycastHitsDebug[0].point;
+            Vector2 raycastNormal = _movementRaycastHitsDebug[0].normal;
+
+            Debug.DrawLine(raycastHitPos, raycastHitPos + raycastNormal * 5.0f, Color.magenta);
+        }
     }
 }
