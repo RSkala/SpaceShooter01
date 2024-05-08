@@ -5992,11 +5992,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpawnInfoArray:
   - <EnemyShipPrefab>k__BackingField: {fileID: 6436944088096808305, guid: 4220c6aae8b00452d954a5a6ea019769, type: 3}
-    <TimeBetweenSpawns>k__BackingField: 1
+    <TimeBetweenSpawns>k__BackingField: 0.25
   - <EnemyShipPrefab>k__BackingField: {fileID: 9019146126435365731, guid: 19a2802dd62754fa69da7fbd30115aa7, type: 3}
-    <TimeBetweenSpawns>k__BackingField: 2
+    <TimeBetweenSpawns>k__BackingField: 0.5
   - <EnemyShipPrefab>k__BackingField: {fileID: 1831814516692264463, guid: 454c278ac5fe94ee6bc535bab0aae89c, type: 3}
-    <TimeBetweenSpawns>k__BackingField: 3
+    <TimeBetweenSpawns>k__BackingField: 1
 --- !u!1001 &1983149746
 PrefabInstance:
   m_ObjectHideFlags: 0
