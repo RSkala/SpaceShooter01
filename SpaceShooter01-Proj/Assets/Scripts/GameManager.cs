@@ -10,8 +10,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Header("Player Ships and Satellite Weapons")]
+    [SerializeField] Transform _playerShipParent;
     [SerializeField] PlayerController _playerShipPrefab01;
-    [SerializeField] SatelliteWeaponBase _satelliteWeaponPrefab01;
+    [SerializeField] SatelliteWeaponBase _satelliteWeaponPrefab01; // RKS TODO: Use ScriptableObject and add prefab there
 
     [field:Header("Enemy Ships")]
     [SerializeField] EnemySpawnController _enemySpawnController;
@@ -26,12 +27,14 @@ public class GameManager : MonoBehaviour
     [field:SerializeField] public Transform PlayerProjectileParent { get; private set; }
     [field:SerializeField] public ProjectileBulletStraight PlayerBasicProjectilePrefab { get; private set; } 
 
-    [Header("Explosions")]
-    [SerializeField] GameObject[] _explosionPrefabs;
+    [field:Header("Explosions")]
     [field:SerializeField] public Transform EnemyExplosionParent { get; private set; }
+    [SerializeField] GameObject[] _explosionPrefabs;
 
     [Header("Pickup Items")]
+    [SerializeField] PickupItemSatelliteWeapon _pickupItemSatelliteWeaponPrefab;
     [SerializeField] PickupItemScoreMultiplier _pickupItemScoreMultiplierPrefab;
+    [SerializeField] Transform _powerupItemParent;
     [SerializeField] Transform _pickupItemScoreMultiplierParent;
     [SerializeField, Range(0.0f, 1.0f)] float _scoreMultiplierDropChance; // Currently there are too many on screen. This reduces the visual cacophony.
 
@@ -52,6 +55,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text _scoreText;
     [SerializeField] TMP_Text _multiplierText;
 
+    [field:Header("--------- Debug ---------")]
+    [field:SerializeField] public bool PlayerInvincible { get; private set; }
+
     const int MAX_BORDER_IMPACT_EFFECTS = 75;
     const int MAX_PLAYER_BASIC_PROJECTILES = 75;
     const int MAX_SCORE_MULTIPLIER_PICKUP_ITEMS = 50;
@@ -69,6 +75,9 @@ public class GameManager : MonoBehaviour
     
     // Current player ship
     PlayerController _currentPlayerShip;
+
+    // Active Satellite Weapon Pickup item
+    PickupItemSatelliteWeapon _currentSatelliteWeaponPickup;
 
     // First implementation: Each enemy has a score value of 1. 
     const int ENEMY_SCORE_VALUE = 1;
@@ -101,6 +110,11 @@ public class GameManager : MonoBehaviour
         CrosshairController.Instance.ShowSystemMouseCursor();
         CrosshairController.Instance.HideCrosshair();
         //CrosshairController.Instance.IsInGameplay = false;
+
+        if(PlayerInvincible)
+        {
+            Debug.LogWarning("Player is invincible");
+        }
     }
 
     void StartGame()
@@ -116,7 +130,7 @@ public class GameManager : MonoBehaviour
         _gameUI.SetActive(true);
 
         // Create a player ship
-        _currentPlayerShip = GameObject.Instantiate<PlayerController>(_playerShipPrefab01);
+        _currentPlayerShip = GameObject.Instantiate<PlayerController>(_playerShipPrefab01, _playerShipParent);
 
         // Start Enemy Spawning
         _enemySpawnController.StartSpawning();
@@ -167,6 +181,10 @@ public class GameManager : MonoBehaviour
 
     void InitPools()
     {
+        // For now, just create a single SatelliteWeapon pickup
+        _currentSatelliteWeaponPickup = GameObject.Instantiate<PickupItemSatelliteWeapon>(_pickupItemSatelliteWeaponPrefab, _powerupItemParent);
+        _currentSatelliteWeaponPickup.name = _pickupItemSatelliteWeaponPrefab.name + "-01";
+
         InitBorderImpactEffectPool();
         InitPlayerBasicProjectilePool();
         InitPickupItemScoreMultiplierPool();
@@ -174,6 +192,8 @@ public class GameManager : MonoBehaviour
 
     void ResetPools()
     {
+        _currentSatelliteWeaponPickup.Deactivate();
+
         // Iterate through all pools and deactivate everything
         _borderImpactEffectPool.ForEach(effect => effect.gameObject.SetActive(false));
         _playerBasicProjectilePool.ForEach(projectile => projectile.Deactivate());
@@ -224,7 +244,8 @@ public class GameManager : MonoBehaviour
     {
         ProjectileBulletStraight playerBasicProjectile = GameObject.Instantiate<ProjectileBulletStraight>(PlayerBasicProjectilePrefab, PlayerBasicProjectileParent);
         playerBasicProjectile.name = PlayerBasicProjectilePrefab.name + "-" + (_playerBasicProjectilePool.Count + 1);
-        playerBasicProjectile.gameObject.SetActive(false);
+        //playerBasicProjectile.gameObject.SetActive(false); // This is now in the Start
+        //playerBasicProjectile.Deactivate(); // This is now in the Start
         _playerBasicProjectilePool.Add(playerBasicProjectile);
         return playerBasicProjectile;
     }
@@ -252,7 +273,8 @@ public class GameManager : MonoBehaviour
     {
         PickupItemScoreMultiplier pickupItemScoreMultiplier = GameObject.Instantiate<PickupItemScoreMultiplier>(_pickupItemScoreMultiplierPrefab, _pickupItemScoreMultiplierParent);
         pickupItemScoreMultiplier.name = _pickupItemScoreMultiplierPrefab.name + "-" + (_pickupItemScoreMultiplierPool.Count + 1);
-        pickupItemScoreMultiplier.gameObject.SetActive(false);
+        //pickupItemScoreMultiplier.gameObject.SetActive(false); // This is now done in the Start
+        //pickupItemScoreMultiplier.Deactivate(); // This is now done in the Start
         _pickupItemScoreMultiplierPool.Add(pickupItemScoreMultiplier);
         return pickupItemScoreMultiplier;
     }
@@ -281,7 +303,10 @@ public class GameManager : MonoBehaviour
         UpdateScoreAndMultiplierText();
 
         // Spawn Score Multiplier at enemy position
-        SpawnScoreMultiplierPickup(destroyedEnemyGameObject.transform.position);    
+        SpawnScoreMultiplierPickup(destroyedEnemyGameObject.transform.position);
+
+        // Spawn Satellite Weapon pickup at enemy position
+        SpawnSatelliteWeaponPickup(destroyedEnemyGameObject.transform.position);
     }
 
     void UpdateScoreAndMultiplierText()
@@ -303,6 +328,11 @@ public class GameManager : MonoBehaviour
         UpdateScoreAndMultiplierText();
     }
 
+    public void OnSatelliteWeaponCollected()
+    {
+        _currentPlayerShip.AddSatelliteWeapon(_satelliteWeaponPrefab01, _playerShipParent);
+    }
+
     public void SpawnScoreMultiplierPickup(Vector2 position)
     {
         // Use a random chance to determine score multiplier drops
@@ -312,6 +342,20 @@ public class GameManager : MonoBehaviour
             PickupItemScoreMultiplier pickupItemScoreMultiplier = GetInactivePickupItemScoreMultiplier();
             pickupItemScoreMultiplier.transform.position = position;
             pickupItemScoreMultiplier.Activate();
+        }
+    }
+
+    const int NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN = 11;
+    void SpawnSatelliteWeaponPickup(Vector2 position)
+    {
+        // TEMP: Spawn Satellite Weapon pickup after X number of enemies destroyed
+        if(!_currentPlayerShip.HasSatelliteWeapon && !_currentSatelliteWeaponPickup.IsActive)
+        {
+            if(_numEnemiesDestroyed > NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN)
+            {
+                _currentSatelliteWeaponPickup.transform.position = position;
+                _currentSatelliteWeaponPickup.Activate();
+            }
         }
     }
 

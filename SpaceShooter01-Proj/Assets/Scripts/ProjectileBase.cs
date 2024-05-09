@@ -16,7 +16,9 @@ public abstract class ProjectileBase : MonoBehaviour
     protected virtual void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _timeAlive = 0.0f;
+
+        // Start all projectiles deactivated
+        Deactivate();
 
         CheckInspectorValues();
     }

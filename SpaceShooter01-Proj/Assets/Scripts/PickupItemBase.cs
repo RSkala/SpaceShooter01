@@ -15,18 +15,16 @@ public abstract class PickupItemBase : MonoBehaviour
     protected Collider2D _collider2D;
 
     protected float _timeAlive;
-    protected Vector2 _movementDirection;
+    //protected Vector2 _movementDirection;
 
     protected virtual void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _collider2D = GetComponent<Collider2D>();
-        _timeAlive = 0.0f;
 
-        // On Spawn, get a random direction for this pickup item to move
-        float randomAngle = Random.Range(0.0f, 360.0f);
-        _rigidbody2D.SetRotation(randomAngle);
+        // Start all pickup items deactivated
+        Deactivate();
     }
 
     protected virtual void Update()
@@ -39,9 +37,12 @@ public abstract class PickupItemBase : MonoBehaviour
         }
 
         // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
-        Vector2 movementDirection = _rigidbody2D.transform.up;
-        Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
-        _rigidbody2D.MovePosition(newPos);
+        if(_moveSpeed > Mathf.Epsilon)
+        {
+            Vector2 movementDirection = _rigidbody2D.transform.up;
+            Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
+            _rigidbody2D.MovePosition(newPos);
+        }
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -97,6 +98,13 @@ public abstract class PickupItemBase : MonoBehaviour
         IsActive = true;
         gameObject.SetActive(true);
         _timeAlive = 0.0f;
+
+        if(_moveSpeed > Mathf.Epsilon)
+        {
+            // On Spawn, get a random direction for this pickup item to move
+            float randomAngle = Random.Range(0.0f, 360.0f);
+            _rigidbody2D.SetRotation(randomAngle);
+        }
     }
 
     public void Deactivate()
@@ -104,5 +112,6 @@ public abstract class PickupItemBase : MonoBehaviour
         IsActive = false;
         gameObject.SetActive(false);
         _timeAlive = 0.0f;
+        _rigidbody2D.SetRotation(0.0f);
     }
 }

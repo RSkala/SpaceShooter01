@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ProjectileBase _projectilePrefab;
     [SerializeField] float _projectileShotsPerSecond;
     [SerializeField] Transform _firePointsPivot;
-    [SerializeField] SatelliteWeaponBase _currentSatelliteWeapon;
+    //[SerializeField] SatelliteWeaponBase _currentSatelliteWeapon;
 
     [Header("Movement Collision")]
     [SerializeField] ContactFilter2D movementContactFilter;
@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] bool _disableMouseLookInput; // This is used for object position adjustment without the mouse look interfering.
+
+    public bool HasSatelliteWeapon => _currentSatelliteWeapon != null;
 
     // Components
     Rigidbody2D _rigidbody2D;
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> _movementRaycastHitsDebug = new();
 
     // Weapons
+    SatelliteWeaponBase _currentSatelliteWeapon;
     float _fireRate;
     float _timeSinceLastShot;
 
@@ -62,9 +65,17 @@ public class PlayerController : MonoBehaviour
         ResetTimeSinceLastShot();
 
         // Init Satellite Weapon
+        // if(_currentSatelliteWeapon != null)
+        // {
+        //     _currentSatelliteWeapon.Init(_rigidbody2D);
+        // }
+    }
+
+    void OnDestroy()
+    {
         if(_currentSatelliteWeapon != null)
         {
-            _currentSatelliteWeapon.Init(_rigidbody2D);
+            Destroy(_currentSatelliteWeapon.gameObject);
         }
     }
 
@@ -295,19 +306,22 @@ public class PlayerController : MonoBehaviour
 
         if(collidingGameObject.TryGetComponent<EnemyShipBase>(out var enemyShip))
         {
-            if(enemyShip.TimeAlive >= EnemyShipBase.PLAYER_INVULNERABLE_TIME_SECONDS)
+            if(!GameManager.Instance.PlayerInvincible)
             {
-                // The player has collided with an enemy ship. Destroy the player.
-                Destroy(gameObject);
+                if(enemyShip.TimeAlive >= EnemyShipBase.PLAYER_INVULNERABLE_TIME_SECONDS)
+                {
+                    // The player has collided with an enemy ship. Destroy the player.
+                    Destroy(gameObject);
 
-                // TODO: Show player explosion effect
+                    // TODO: Show player explosion effect
 
-                // Game Over
-                GameManager.Instance.EndGame();
-            }
-            else
-            {
-                //Debug.Log("Spawn time too short. Ignoring Player Ship collision with " + collidingGameObject.name);
+                    // Game Over
+                    GameManager.Instance.EndGame();
+                }
+                else
+                {
+                    //Debug.Log("Spawn time too short. Ignoring Player Ship collision with " + collidingGameObject.name);
+                }
             }
         }
     }
@@ -353,5 +367,11 @@ public class PlayerController : MonoBehaviour
             projectile.transform.rotation = _firePointsPivot.rotation;
             projectile.Activate();
         }
+    }
+
+    public void AddSatelliteWeapon(SatelliteWeaponBase satelliteWeaponPrefab, Transform weaponParent)
+    {
+        _currentSatelliteWeapon = GameObject.Instantiate(satelliteWeaponPrefab, weaponParent);
+        _currentSatelliteWeapon.Init(_rigidbody2D);
     }
 }

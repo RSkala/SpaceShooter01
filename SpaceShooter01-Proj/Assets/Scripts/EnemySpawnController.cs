@@ -6,6 +6,9 @@ public class EnemySpawnController : MonoBehaviour
 {
     [Tooltip("List of Enemy Spawns")]
     [SerializeField] EnemySpawnInfo[] _enemySpawnInfoArray;
+    
+    [Header("Debug")]
+    [SerializeField] bool _disableEnemySpawning;
 
     // Describes enemy spawn information
     [System.Serializable]
@@ -22,6 +25,11 @@ public class EnemySpawnController : MonoBehaviour
     void Start()
     {
         _mainCamera = Camera.main;
+
+        if(_disableEnemySpawning)
+        {
+            Debug.LogWarning("Enemy spawning disabled");
+        }
     }
 
     void Update()
@@ -31,6 +39,11 @@ public class EnemySpawnController : MonoBehaviour
 
     public void StartSpawning()
     {
+        if(_disableEnemySpawning)
+        {
+            return;
+        }
+
         // Stop all running Couroutines (this shouldn't happen, but just in case)
         StopAllCoroutines();
 
@@ -62,7 +75,7 @@ public class EnemySpawnController : MonoBehaviour
         randomWorldPoint.z = 0.0f;
 
         // Create a new enemy ship
-        EnemyShipBase newEnemyShip = GameObject.Instantiate<EnemyShipBase>(enemyShipPrefab, randomWorldPoint, Quaternion.identity);
+        EnemyShipBase newEnemyShip = GameObject.Instantiate<EnemyShipBase>(enemyShipPrefab, randomWorldPoint, Quaternion.identity, GameManager.Instance.EnemyShipParent);
 
         // Start a new spawning coroutine with this same spawning data
         StartCoroutine(SpawnEnemy(timeBetweenSpawns, enemyShipPrefab));
