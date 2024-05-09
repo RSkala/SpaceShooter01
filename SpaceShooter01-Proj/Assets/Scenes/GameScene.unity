@@ -7514,7 +7514,6 @@ MonoBehaviour:
   _pickupItemScoreMultiplierPrefab: {fileID: 3852439820199026046, guid: ae9df00823e4b43a2877caa3ec95705b, type: 3}
   _pickupItemScoreMultiplierParent: {fileID: 185079908}
   _scoreMultiplierDropChance: 0.25
-  _crosshairController: {fileID: 528049000}
   _mainMenuScreen: {fileID: 2007794425}
   _startGameButton: {fileID: 1105838624}
   _gameOverScreen: {fileID: 1526627671}
