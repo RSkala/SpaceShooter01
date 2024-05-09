@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
 
     void OnGameOverScreenPlayAgainButtonPressed()
     {
-        Debug.Log("OnGameOverScreenPlayAgainButtonPressed");
+        //Debug.Log("OnGameOverScreenPlayAgainButtonPressed");
         StartGame();
     }
 
