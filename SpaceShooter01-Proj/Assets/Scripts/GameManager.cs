@@ -5,10 +5,16 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Player Ships and Satellite Weapons")]
+    [SerializeField] PlayerController _playerShipPrefab01;
+    [SerializeField] SatelliteWeaponBase _satelliteWeaponPrefab01;
+
     [field:Header("Enemy Ships")]
+    [SerializeField] EnemySpawnController _enemySpawnController;
     [field:SerializeField] public Transform EnemyShipParent { get; private set;}
     
     [Header("Border Impacts")]
@@ -29,7 +35,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform _pickupItemScoreMultiplierParent;
     [SerializeField, Range(0.0f, 1.0f)] float _scoreMultiplierDropChance; // Currently there are too many on screen. This reduces the visual cacophony.
 
-    [Header("UI")]
+    [Header("--------- UI ---------")]
+    [SerializeField] CrosshairController _crosshairController;
+
+    [Header("Main Menu Screen")]
+    [SerializeField] GameObject _mainMenuScreen;
+    [SerializeField] Button _startGameButton;
+
+    [Header("Game Over Screen")]
+    [SerializeField] GameObject _gameOverScreen;
+    [SerializeField] Button _playAgainButton;
+
+    [Header("Game UI")]
+    [SerializeField] GameObject _gameUI;
     [SerializeField] TMP_Text _scoreText;
     [SerializeField] TMP_Text _multiplierText;
 
@@ -47,6 +65,9 @@ public class GameManager : MonoBehaviour
     long _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
     long _currentScoreMultiplier = 1; // Increase this value by 1 each time a player picks up a multiplier item (TODO)
     long _numCollectedScoreMultipliers = 0;
+    
+    // Current player ship
+    PlayerController _currentPlayerShip;
 
     // First implementation: Each enemy has a score value of 1. 
     const int ENEMY_SCORE_VALUE = 1;
@@ -63,8 +84,47 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitScoreValues();
+        // Initialize gameplay pools
         InitPools();
+
+        // Initialize button click callbacks
+        _startGameButton.onClick.AddListener(OnMainMenuScreenStartButtonPressed);
+        _playAgainButton.onClick.AddListener(OnGameOverScreenPlayAgainButtonPressed);
+
+        // Show Main Menu Screen
+        _mainMenuScreen.SetActive(true);
+    }
+
+    void StartGame()
+    {
+        InitScoreValues();
+        ResetPools();
+
+        // Hide Main Menu Screen and Game Over Screen
+        _mainMenuScreen.SetActive(false);
+        _gameOverScreen.SetActive(false);
+
+        // Show Game UI
+        _gameUI.SetActive(true);
+
+        // Create a player ship
+        _currentPlayerShip = GameObject.Instantiate<PlayerController>(_playerShipPrefab01);
+
+        // Start Enemy Spawning
+        _enemySpawnController.StartSpawning();
+    }
+
+    void EndGame()
+    {
+        // Stop Enemy Spawning
+        _enemySpawnController.StopSpawning();
+
+        // Hide Main Menu Screen and Game UI
+        _mainMenuScreen.SetActive(false);
+        _gameUI.SetActive(false);
+
+        // Show Game Over Screen
+        _gameOverScreen.SetActive(true);
     }
     
     public GameObject GetRandomExplosionPrefab()
@@ -87,6 +147,14 @@ public class GameManager : MonoBehaviour
         InitBorderImpactEffectPool();
         InitPlayerBasicProjectilePool();
         InitPickupItemScoreMultiplierPool();
+    }
+
+    void ResetPools()
+    {
+        // Iterate through all pools and deactivate everything
+        _borderImpactEffectPool.ForEach(effect => effect.gameObject.SetActive(false));
+        _playerBasicProjectilePool.ForEach(projectile => projectile.Deactivate());
+        _pickupItemScoreMultiplierPool.ForEach(pickupItem => pickupItem.Deactivate());
     }
 
     void InitBorderImpactEffectPool()
@@ -222,4 +290,21 @@ public class GameManager : MonoBehaviour
             pickupItemScoreMultiplier.Activate();
         }
     }
+
+    // ------------------------------------------------------------------------------------------------------------
+    #region UI
+    void OnMainMenuScreenStartButtonPressed()
+    {
+        Debug.Log("OnMainMenuScreenStartButtonPressed");
+        StartGame();
+    }
+
+    void OnGameOverScreenPlayAgainButtonPressed()
+    {
+        Debug.Log("OnGameOverScreenPlayAgainButtonPressed");
+        StartGame();
+    }
+
+    #endregion // UI
+    // ------------------------------------------------------------------------------------------------------------
 }

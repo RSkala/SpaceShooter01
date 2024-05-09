@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawnController : MonoBehaviour
@@ -16,52 +17,56 @@ public class EnemySpawnController : MonoBehaviour
 
     Camera _mainCamera;
 
+    //List<Coroutine> _spawningCoroutines = new();
+
     void Start()
     {
         _mainCamera = Camera.main;
+    }
 
+    void Update()
+    {
+        //Debug.Log("Active Spawning Coroutines: " + _spawningCoroutines.Count);
+    }
+
+    public void StartSpawning()
+    {
+        // Stop all running Couroutines (this shouldn't happen, but just in case)
+        StopAllCoroutines();
+
+        // Iterate through each spawninfo object and start a couroutine with the spawning data
         foreach(EnemySpawnInfo enemySpawnInfo in _enemySpawnInfoArray)
         {
             StartCoroutine(SpawnEnemy(enemySpawnInfo.TimeBetweenSpawns, enemySpawnInfo.EnemyShipPrefab));
+            //Coroutine spawningCoroutine = StartCoroutine(SpawnEnemy(enemySpawnInfo.TimeBetweenSpawns, enemySpawnInfo.EnemyShipPrefab));
+            //_spawningCoroutines.Add(spawningCoroutine);
         }
+    }
+
+    public void StopSpawning()
+    {
+        // Stop all the spawning coroutines
+        StopAllCoroutines();
     }
 
     IEnumerator SpawnEnemy(float timeBetweenSpawns, EnemyShipBase enemyShipPrefab)
     {
         yield return new WaitForSeconds(timeBetweenSpawns);
 
-        // Debug.Log("----");
-
-        // // Get random position within the viewport
-        // Debug.Log("Screen WxH: " + Screen.width + " x " + Screen.height);
-        // float screenWidth = (float)Screen.width;
-        // float screenHeight = (float)Screen.height;
-
-        // Debug.Log("_mainCamera.pixelRect.width:  " + _mainCamera.pixelRect.width);
-        // Debug.Log("_mainCamera.pixelRect.height: " + _mainCamera.pixelRect.height);
-        // Debug.Log("-");
-        // Debug.Log("_mainCamera.pixelWidth:  " + _mainCamera.pixelWidth);
-        // Debug.Log("_mainCamera.pixelHeight: " + _mainCamera.pixelHeight);
-        // Debug.Log("-");
-        // Debug.Log("_mainCamera.scaledPixelWidth:  " + _mainCamera.scaledPixelWidth);
-        // Debug.Log("_mainCamera.scaledPixelHeight: " + _mainCamera.scaledPixelHeight);
-
         // Get a random screen position within the screen width and height
         float randomScreenPosX = Random.Range(0.0f, _mainCamera.pixelRect.width);
         float randomScreenPosY = Random.Range(0.0f, _mainCamera.pixelRect.height);
 
-        // Conver the random screen position to a world position
-        //mouseScreenPosition.z = _mainCamera.nearClipPlane;
-        //Vector3 randomWorldPoint = _mainCamera.ScreenToWorldPoint(new Vector3(randomScreenPosX, randomScreenPosY, 0.0f));
+        // Convert the random screen position to a world position
         Vector3 randomWorldPoint = _mainCamera.ScreenToWorldPoint(new Vector3(randomScreenPosX, randomScreenPosY, _mainCamera.nearClipPlane));
-        //Debug.Log("randomWorldPoint 1: " + randomWorldPoint);
         randomWorldPoint.z = 0.0f;
-        //Debug.Log("randomWorldPoint 2: " + randomWorldPoint);
 
-        //Vector3 mouseWorldPoint = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-        //Debug.Log("randomWorldPoint: " + randomWorldPoint);
-
+        // Create a new enemy ship
         EnemyShipBase newEnemyShip = GameObject.Instantiate<EnemyShipBase>(enemyShipPrefab, randomWorldPoint, Quaternion.identity);
+
+        // Start a new spawning coroutine with this same spawning data
         StartCoroutine(SpawnEnemy(timeBetweenSpawns, enemyShipPrefab));
+        //Coroutine spawningCoroutine = StartCoroutine(SpawnEnemy(timeBetweenSpawns, enemyShipPrefab));
+        //_spawningCoroutines.Add(spawningCoroutine);
     }
 }

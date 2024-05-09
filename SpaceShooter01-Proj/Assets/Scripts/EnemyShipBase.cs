@@ -18,7 +18,8 @@ public abstract class EnemyShipBase : MonoBehaviour
         //_rigidbody2D = GetComponent<Rigidbody2D>();
 
         // Default to just targeting the player
-        _target = GameObject.Find("PlayerShip_1").transform;
+        //_target = GameObject.Find("PlayerShip_1").transform;
+        _target = GameObject.FindFirstObjectByType<PlayerController>().transform;
     }
 
     protected virtual void FixedUpdate()
