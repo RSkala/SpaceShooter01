@@ -197,6 +197,7 @@ public class PlayerController : MonoBehaviour
 
         // Hide the Crosshair
         CrosshairController.Instance.HideCrosshair();
+        CrosshairController.Instance.HideSystemMouseCursor();
     }
 
     void OnWASDMove(InputValue inputValue)
@@ -205,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
         // Show the Crosshair
         CrosshairController.Instance.ShowCrosshair();
+        CrosshairController.Instance.HideSystemMouseCursor();
     }
 
     // void OnMove(InputValue inputValue) // RKS: MARKED FOR DEATH
@@ -218,6 +220,7 @@ public class PlayerController : MonoBehaviour
 
         // Hide the Crosshair
         CrosshairController.Instance.HideCrosshair();
+        CrosshairController.Instance.HideSystemMouseCursor();
 
         // The player is using their gamepad's right thumbstick for aiming, so do not use mouse look for aiming
         _useMouseLook = false;
@@ -252,6 +255,7 @@ public class PlayerController : MonoBehaviour
 
         // Show the Crosshair
         CrosshairController.Instance.ShowCrosshair();
+        CrosshairController.Instance.HideSystemMouseCursor();
     }
 
     void FireProjectile()

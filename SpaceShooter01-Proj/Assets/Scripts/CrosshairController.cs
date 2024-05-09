@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CrosshairController : MonoBehaviour
 {
+    //public bool IsInGameplay { get; set; }
+
     Camera _mainCamera;
 
     public static CrosshairController Instance { get; private set; }
@@ -33,6 +35,19 @@ public class CrosshairController : MonoBehaviour
         // Set the crosshair at the mouse position
         Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePosition.x, mousePosition.y, 0.0f);
+
+        // Update sprite visibility
+        //_crosshairSprite.enabled = !IsInGameplay;
+    }
+
+    public void ShowSystemMouseCursor()
+    {
+        Cursor.visible = true;
+    }
+
+    public void HideSystemMouseCursor()
+    {
+        Cursor.visible = false;
     }
 
     public void ShowCrosshair()

@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] float _scoreMultiplierDropChance; // Currently there are too many on screen. This reduces the visual cacophony.
 
     [Header("--------- UI ---------")]
-    [SerializeField] CrosshairController _crosshairController;
+    //[SerializeField] CrosshairController _crosshairController;
 
     [Header("Main Menu Screen")]
     [SerializeField] GameObject _mainMenuScreen;
@@ -93,6 +93,11 @@ public class GameManager : MonoBehaviour
 
         // Show Main Menu Screen
         _mainMenuScreen.SetActive(true);
+
+        // Enable system mouse cursor and hide gameplay crosshair
+        CrosshairController.Instance.ShowSystemMouseCursor();
+        CrosshairController.Instance.HideCrosshair();
+        //CrosshairController.Instance.IsInGameplay = false;
     }
 
     void StartGame()
@@ -112,6 +117,8 @@ public class GameManager : MonoBehaviour
 
         // Start Enemy Spawning
         _enemySpawnController.StartSpawning();
+
+        //CrosshairController.Instance.IsInGameplay = true;
     }
 
     void EndGame()
@@ -295,7 +302,7 @@ public class GameManager : MonoBehaviour
     #region UI
     void OnMainMenuScreenStartButtonPressed()
     {
-        Debug.Log("OnMainMenuScreenStartButtonPressed");
+        //Debug.Log("OnMainMenuScreenStartButtonPressed");
         StartGame();
     }
 
