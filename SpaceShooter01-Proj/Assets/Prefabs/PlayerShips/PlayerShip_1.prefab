@@ -308,7 +308,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
   _firePointsPivot: {fileID: 6372445789137428142}
-  _currentSatelliteWeapon: {fileID: 0}
+  _playerExplosionPrefab: {fileID: 4064225346800633717, guid: 95aebe0b39b8448308fe69a623efee47, type: 3}
   movementContactFilter:
     useTriggers: 0
     useLayerMask: 1

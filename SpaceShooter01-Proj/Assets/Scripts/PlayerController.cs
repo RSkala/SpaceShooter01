@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ProjectileBase _projectilePrefab;
     [SerializeField] float _projectileShotsPerSecond;
     [SerializeField] Transform _firePointsPivot;
-    //[SerializeField] SatelliteWeaponBase _currentSatelliteWeapon;
+    [SerializeField] ParticleSystem _playerExplosionPrefab;
 
     [Header("Movement Collision")]
     [SerializeField] ContactFilter2D movementContactFilter;
@@ -313,7 +313,11 @@ public class PlayerController : MonoBehaviour
                     // The player has collided with an enemy ship. Destroy the player.
                     Destroy(gameObject);
 
-                    // TODO: Show player explosion effect
+                    // Play explosion particle. Destroy self on end.
+                    ParticleSystem explosionParticle = GameObject.Instantiate(_playerExplosionPrefab, transform.position, Quaternion.identity);
+                    ParticleSystem.MainModule particleMainModule = explosionParticle.main;
+                    particleMainModule.stopAction = ParticleSystemStopAction.Destroy;
+                    explosionParticle.Play();
 
                     // Play explosion sound
                     AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.PlayerExplosion);
