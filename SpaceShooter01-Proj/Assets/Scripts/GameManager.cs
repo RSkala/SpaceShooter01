@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -115,6 +117,21 @@ public class GameManager : MonoBehaviour
         if(PlayerInvincible)
         {
             Debug.LogWarning("Player is invincible");
+        }
+    }
+
+    void Update()
+    {
+        // Temp hack to allow the player to press start while in a menu
+        Gamepad currentGamepad = Gamepad.current;
+        if(currentGamepad != null)
+        {
+            // The player has a gamepad connected. Check if it has a start button and that it was just pressed.
+            ButtonControl startButton = currentGamepad.startButton;
+            if(startButton != null && startButton.wasPressedThisFrame)
+            {
+                OnGamepadStartButtonPressed();
+            }
         }
     }
 
@@ -372,6 +389,18 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("OnGameOverScreenPlayAgainButtonPressed");
         StartGame();
+    }
+
+    public void OnGamepadStartButtonPressed()
+    {
+        if(_mainMenuScreen.activeInHierarchy)
+        {
+            StartGame();
+        }
+        else if(_gameOverScreen.activeInHierarchy)
+        {
+            StartGame();
+        }
     }
 
     #endregion // UI
