@@ -27,7 +27,15 @@ public abstract class EnemyShipBase : MonoBehaviour
 
         // Default to just targeting the player
         //_target = GameObject.Find("PlayerShip_1").transform;
-        _target = GameObject.FindFirstObjectByType<PlayerController>().transform;
+        PlayerController playerController = GameObject.FindFirstObjectByType<PlayerController>();
+        if(playerController != null)
+        {
+            _target = playerController.transform;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerController not found when setting as Enemy Ship target");
+        }
     }
 
     protected virtual void FixedUpdate()
