@@ -4972,6 +4972,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerShotClips:
   - {fileID: 8300000, guid: 51831eb0e80314622b43803f963b61c3, type: 3}
+  _playerExplosionClips:
+  - {fileID: 8300000, guid: c5f5989cfd809435dbc95201d470f8a0, type: 3}
   _enemyExplosionClips:
   - {fileID: 8300000, guid: 4ca6e65b7d3c248d39e090c5943bc49b, type: 3}
 --- !u!1001 &1059687026

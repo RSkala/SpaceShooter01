@@ -6,17 +6,20 @@ using UnityEngine;
 public class AudioPlayback : MonoBehaviour
 {
     [SerializeField] AudioClip[] _playerShotClips;
+    [SerializeField] AudioClip[] _playerExplosionClips;
     [SerializeField] AudioClip[] _enemyExplosionClips;
 
     public static AudioPlayback Instance { get; private set; }
 
     AudioSource _playerShotSource;
+    AudioSource _playerExplosionSource;
     AudioSource _enemyExplosionSource;
 
     public enum SFX
     {
         None,
         PlayerShot,
+        PlayerExplosion,
         EnemyExplosion,
     }
 
@@ -34,6 +37,7 @@ public class AudioPlayback : MonoBehaviour
     {
         // Create the AudioSource objects and add as chidren
         CreateAudioSourceChild(out _playerShotSource, "PlayerShotSource", 0.5f);
+        CreateAudioSourceChild(out _playerExplosionSource, "PlayerExplosionSource");
         CreateAudioSourceChild(out _enemyExplosionSource, "EnemyExplosionSource");
     }
 
@@ -69,6 +73,7 @@ public class AudioPlayback : MonoBehaviour
         switch(sfx)
         {
             case SFX.PlayerShot: PlayRandomSoundFromClips(_playerShotSource, _playerShotClips); break;
+            case SFX.PlayerExplosion: PlayRandomSoundFromClips(_playerExplosionSource, _playerExplosionClips); break;
             case SFX.EnemyExplosion: PlayRandomSoundFromClips(_enemyExplosionSource, _enemyExplosionClips); break;
             default: break;
         }

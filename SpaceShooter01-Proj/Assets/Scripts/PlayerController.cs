@@ -315,6 +315,9 @@ public class PlayerController : MonoBehaviour
 
                     // TODO: Show player explosion effect
 
+                    // Play explosion sound
+                    AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.PlayerExplosion);
+
                     // Game Over
                     GameManager.Instance.EndGame();
                 }
