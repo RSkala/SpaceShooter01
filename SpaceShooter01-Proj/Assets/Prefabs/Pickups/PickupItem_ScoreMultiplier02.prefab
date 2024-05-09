@@ -164,6 +164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2
   _lifetimeSeconds: 3
+  _useTargetAttract: 1
+  _targetAttactDistance: 2
+  _attractionMoveSpeed: 10.5
 --- !u!1 &6506075378357488670
 GameObject:
   m_ObjectHideFlags: 0

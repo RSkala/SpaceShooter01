@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
     const int MAX_SCORE_MULTIPLIER_PICKUP_ITEMS = 50;
 
     public static GameManager Instance { get; private set; }
+    public PlayerController CurrentPlayerShip => _currentPlayerShip;
 
     List<ParticleSystem> _borderImpactEffectPool = new();
     List<ProjectileBulletStraight> _playerBasicProjectilePool = new();

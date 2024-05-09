@@ -6135,6 +6135,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 7359195965320122970, guid: 29e2ec9c301074bcc9429a52af954f70, type: 3}
   _projectileShotsPerSecond: 8
   _firePointsPivot: {fileID: 0}
+  _playerExplosionPrefab: {fileID: 0}
   movementContactFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -6313,14 +6314,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616306983}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -9.451, y: 4.441, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1694839941}
   - {fileID: 1228342830}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1635802933}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1635802932
 GameObject:
@@ -6360,6 +6361,7 @@ Transform:
   - {fileID: 726738544}
   - {fileID: 407041566}
   - {fileID: 71015100}
+  - {fileID: 1616306989}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1676281398
@@ -7717,7 +7719,7 @@ MonoBehaviour:
   _gameUI: {fileID: 1917306112}
   _scoreText: {fileID: 877768011}
   _multiplierText: {fileID: 66056754}
-  <PlayerInvincible>k__BackingField: 0
+  <PlayerInvincible>k__BackingField: 1
 --- !u!1 &2048750224
 GameObject:
   m_ObjectHideFlags: 0
@@ -8224,4 +8226,3 @@ SceneRoots:
   - {fileID: 144928275}
   - {fileID: 1891405494}
   - {fileID: 1821046208}
-  - {fileID: 1616306989}

@@ -7,15 +7,20 @@ public abstract class PickupItemBase : MonoBehaviour
     [Header("PickupItemBase Fields")]
     [SerializeField] protected float _moveSpeed;
     [SerializeField] protected float _lifetimeSeconds;
+    [SerializeField] protected bool _useTargetAttract; // If enabled, will be "pulled" towards the target that is picking up this item
+    [SerializeField] protected float _targetAttactDistance; // If the player is this close to an item pickup, start attraction
+    [SerializeField] protected float _attractionMoveSpeed;
 
     public bool IsActive { get; protected set; }
+    bool IsAttractingToTarget => _attractionTarget != null;
 
     protected SpriteRenderer _spriteRenderer;
     protected Rigidbody2D _rigidbody2D;
     protected Collider2D _collider2D;
 
     protected float _timeAlive;
-    //protected Vector2 _movementDirection;
+    
+    protected Transform _attractionTarget;
 
     protected virtual void Start()
     {
@@ -29,19 +34,64 @@ public abstract class PickupItemBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        _timeAlive += Time.deltaTime;
-        if(_timeAlive >= _lifetimeSeconds)
+        // Update lifetime. Ignore if attracting to target
+        if(!IsAttractingToTarget)
         {
-            // Lifetime has elapsed. Remove from the scene.
-            Deactivate();
+            _timeAlive += Time.deltaTime;
+            if(_timeAlive >= _lifetimeSeconds)
+            {
+                // Lifetime has elapsed. Remove from the scene.
+                Deactivate();
+            }
         }
 
-        // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
-        if(_moveSpeed > Mathf.Epsilon)
+        // Update target attraction
+        UpdateTargetAttraction();
+
+        // Update movement
+        if(IsAttractingToTarget)
         {
-            Vector2 movementDirection = _rigidbody2D.transform.up;
-            Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
+            // Move this pickup item in the direction of its target
+            Vector2 movementDirection = ((Vector2)_attractionTarget.position - _rigidbody2D.position).normalized;
+            Vector2 newPos = _rigidbody2D.position + movementDirection * _attractionMoveSpeed * Time.fixedDeltaTime;
             _rigidbody2D.MovePosition(newPos);
+        }
+        else
+        {
+            // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
+            if(_moveSpeed > Mathf.Epsilon)
+            {
+                Vector2 movementDirection = _rigidbody2D.transform.up;
+                Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
+                _rigidbody2D.MovePosition(newPos);
+            }
+        }
+    }
+
+    protected virtual void UpdateTargetAttraction()
+    {
+        if(!_useTargetAttract)
+        {
+            // Target attraction disabled
+            return;
+        }
+
+        if(IsAttractingToTarget)
+        {
+            // This pickup item already has an attraction target
+            return;
+        }
+
+        PlayerController playerShip = GameManager.Instance.CurrentPlayerShip;
+        if(playerShip != null)
+        {
+            // Get distance from the player ship to this pickup item
+            float distance = Vector2.Distance(_rigidbody2D.position, playerShip.transform.position);
+            if(distance <= _targetAttactDistance)
+            {
+                // Player ship is within the specified distance. Set the player ship as the attraction target.
+                _attractionTarget = playerShip.transform;
+            }
         }
     }
 
@@ -97,7 +147,7 @@ public abstract class PickupItemBase : MonoBehaviour
     {
         IsActive = true;
         gameObject.SetActive(true);
-        _timeAlive = 0.0f;
+        ResetDynamicValues();
 
         if(_moveSpeed > Mathf.Epsilon)
         {
@@ -111,7 +161,13 @@ public abstract class PickupItemBase : MonoBehaviour
     {
         IsActive = false;
         gameObject.SetActive(false);
+        ResetDynamicValues();
+    }
+
+    void ResetDynamicValues()
+    {
         _timeAlive = 0.0f;
         _rigidbody2D.SetRotation(0.0f);
+        _attractionTarget = null;
     }
 }
