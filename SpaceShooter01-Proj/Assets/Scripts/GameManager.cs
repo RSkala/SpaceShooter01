@@ -195,10 +195,12 @@ public class GameManager : MonoBehaviour
 
     void UpdateScoreAndMultiplierText()
     {
+        // Format the score so it includes thousands separators
         string formattedScoreString = string.Format(CultureInfo.InvariantCulture, "{0:N0}", _currentScore);
         _scoreText.text = formattedScoreString;
 
-        string formattedMultiplierString = string.Format(CultureInfo.InvariantCulture, "x {0:N0}", _currentScoreMultiplier);
+        // Format the multiplier so it includes thousands separators and shows "x3456"
+        string formattedMultiplierString = string.Format(CultureInfo.InvariantCulture, "x{0:N0}", _currentScoreMultiplier);
         _multiplierText.text = formattedMultiplierString;
     }
 
