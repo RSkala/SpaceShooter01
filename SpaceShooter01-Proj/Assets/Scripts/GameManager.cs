@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Over Screen")]
     [SerializeField] GameObject _gameOverScreen;
     [SerializeField] Button _playAgainButton;
+    [SerializeField] TMP_Text _finalScoreText;
 
     [Header("Game UI")]
     [SerializeField] GameObject _gameUI;
@@ -93,6 +94,8 @@ public class GameManager : MonoBehaviour
 
         // Show Main Menu Screen
         _mainMenuScreen.SetActive(true);
+        _gameOverScreen.SetActive(false);
+        _gameUI.SetActive(false);
 
         // Enable system mouse cursor and hide gameplay crosshair
         CrosshairController.Instance.ShowSystemMouseCursor();
@@ -286,6 +289,7 @@ public class GameManager : MonoBehaviour
         // Format the score so it includes thousands separators
         string formattedScoreString = string.Format(CultureInfo.InvariantCulture, "{0:N0}", _currentScore);
         _scoreText.text = formattedScoreString;
+        _finalScoreText.text = "Final Score: " + formattedScoreString;
 
         // Format the multiplier so it includes thousands separators and shows "x3456"
         string formattedMultiplierString = string.Format(CultureInfo.InvariantCulture, "x{0:N0}", _currentScoreMultiplier);
