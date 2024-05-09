@@ -7719,7 +7719,7 @@ MonoBehaviour:
   _gameUI: {fileID: 1917306112}
   _scoreText: {fileID: 877768011}
   _multiplierText: {fileID: 66056754}
-  <PlayerInvincible>k__BackingField: 1
+  <PlayerInvincible>k__BackingField: 0
 --- !u!1 &2048750224
 GameObject:
   m_ObjectHideFlags: 0
