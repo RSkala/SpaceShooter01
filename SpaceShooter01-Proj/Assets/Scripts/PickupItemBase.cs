@@ -8,6 +8,8 @@ public abstract class PickupItemBase : MonoBehaviour
     [SerializeField] protected float _moveSpeed;
     [SerializeField] protected float _lifetimeSeconds;
 
+    public bool IsActive { get; protected set; }
+
     protected SpriteRenderer _spriteRenderer;
     protected Rigidbody2D _rigidbody2D;
     protected Collider2D _collider2D;
@@ -33,7 +35,7 @@ public abstract class PickupItemBase : MonoBehaviour
         if(_timeAlive >= _lifetimeSeconds)
         {
             // Lifetime has elapsed. Remove from the scene.
-            Destroy(gameObject);
+            Deactivate();
         }
 
         // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
@@ -63,8 +65,8 @@ public abstract class PickupItemBase : MonoBehaviour
 
     protected virtual void OnPlayerPickedUp(PlayerController enteredPlayer)
     {
-        // Destroy the owning gameObject
-        Destroy(gameObject);
+        // Deactivate this pickup item
+        Deactivate();
     }
 
     void SetProjectileRotationFromCollisionData(Collision2D collision)
@@ -88,5 +90,19 @@ public abstract class PickupItemBase : MonoBehaviour
             float angle = Vector2.SignedAngle(Vector2.up, reflectionVector);
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
         }
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+        gameObject.SetActive(true);
+        _timeAlive = 0.0f;
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        gameObject.SetActive(false);
+        _timeAlive = 0.0f;
     }
 }

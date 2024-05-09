@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Pickup Items")]
     [SerializeField] PickupItemScoreMultiplier _pickupItemScoreMultiplierPrefab;
+    [SerializeField] Transform _pickupItemScoreMultiplierParent;
     [SerializeField, Range(0.0f, 1.0f)] float _scoreMultiplierDropChance; // Currently there are too many on screen. This reduces the visual cacophony.
 
     [Header("UI")]
@@ -33,12 +34,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text _multiplierText;
 
     const int MAX_BORDER_IMPACT_EFFECTS = 75;
-    const int MAX_PLAYER_BASIC_PROJECTILES = 100;
+    const int MAX_PLAYER_BASIC_PROJECTILES = 75;
+    const int MAX_SCORE_MULTIPLIER_PICKUP_ITEMS = 50;
 
     public static GameManager Instance { get; private set; }
 
     List<ParticleSystem> _borderImpactEffectPool = new();
     List<ProjectileBulletStraight> _playerBasicProjectilePool = new();
+    List<PickupItemScoreMultiplier> _pickupItemScoreMultiplierPool = new();
 
     long _numEnemiesDestroyed = 0; // Internal count of how many enemies were destroyed
     long _currentScore = 0; // Add (enemy_score * multiplier) to this each time an enemy is destroyed.
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         InitBorderImpactEffectPool();
         InitPlayerBasicProjectilePool();
+        InitPickupItemScoreMultiplierPool();
     }
 
     void InitBorderImpactEffectPool()
@@ -136,13 +140,41 @@ public class GameManager : MonoBehaviour
 
     public ProjectileBulletStraight GetInactiveBasicPlayerProjectile()
     {
-        ProjectileBulletStraight inactivePlayerBasicProjectile = _playerBasicProjectilePool.FirstOrDefault(projectile => !projectile.gameObject.activeInHierarchy);
+        ProjectileBulletStraight inactivePlayerBasicProjectile = _playerBasicProjectilePool.FirstOrDefault(projectile => !projectile.IsActive);
         if(inactivePlayerBasicProjectile == null)
         {
             Debug.LogWarning("No available player basic projectile in the pool. Increase the pool size.");
             inactivePlayerBasicProjectile = CreateAndAddNewBasicPlayerProjectile();
         }
         return inactivePlayerBasicProjectile;
+    }
+
+    void InitPickupItemScoreMultiplierPool()
+    {
+        for(int i = 0; i < MAX_SCORE_MULTIPLIER_PICKUP_ITEMS; ++i)
+        {
+            CreateAndAddNewPickupItemScoreMultiplier();
+        }
+    }
+
+    PickupItemScoreMultiplier CreateAndAddNewPickupItemScoreMultiplier()
+    {
+        PickupItemScoreMultiplier pickupItemScoreMultiplier = GameObject.Instantiate<PickupItemScoreMultiplier>(_pickupItemScoreMultiplierPrefab, _pickupItemScoreMultiplierParent);
+        pickupItemScoreMultiplier.name = _pickupItemScoreMultiplierPrefab.name + "-" + (_pickupItemScoreMultiplierPool.Count + 1);
+        pickupItemScoreMultiplier.gameObject.SetActive(false);
+        _pickupItemScoreMultiplierPool.Add(pickupItemScoreMultiplier);
+        return pickupItemScoreMultiplier;
+    }
+
+    public PickupItemScoreMultiplier GetInactivePickupItemScoreMultiplier()
+    {
+        PickupItemScoreMultiplier inactivePickupItemScoreMultiplier = _pickupItemScoreMultiplierPool.FirstOrDefault(pickupItem => !pickupItem.IsActive);
+        if(inactivePickupItemScoreMultiplier == null)
+        {
+            Debug.LogWarning("No available score multiplier pickup in the pool. Increase the pool size.");
+            inactivePickupItemScoreMultiplier = CreateAndAddNewPickupItemScoreMultiplier();
+        }
+        return inactivePickupItemScoreMultiplier;
     }
 
     public void OnEnemyDestroyed(GameObject destroyedEnemyGameObject)
@@ -183,7 +215,9 @@ public class GameManager : MonoBehaviour
         float randomChance = Random.Range(0.0f, 1.0f);
         if(randomChance <= _scoreMultiplierDropChance)
         {
-            GameObject.Instantiate(_pickupItemScoreMultiplierPrefab, position, Quaternion.identity);
+            PickupItemScoreMultiplier pickupItemScoreMultiplier = GetInactivePickupItemScoreMultiplier();
+            pickupItemScoreMultiplier.transform.position = position;
+            pickupItemScoreMultiplier.Activate();
         }
     }
 }

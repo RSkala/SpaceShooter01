@@ -890,6 +890,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &185079907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185079908}
+  m_Layer: 0
+  m_Name: '[Score Multiplier Pickups]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185079908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185079907}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1891405494}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232698611
 GameObject:
   m_ObjectHideFlags: 0
@@ -6577,6 +6608,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1891405493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1891405494}
+  m_Layer: 0
+  m_Name: '[Pickup Items]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1891405494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891405493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 185079908}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982640002
 GameObject:
   m_ObjectHideFlags: 0
@@ -7006,6 +7069,7 @@ MonoBehaviour:
   - {fileID: 6346445428858607818, guid: 2f1be9543ff9c497097d86c64031a9fe, type: 3}
   <EnemyExplosionParent>k__BackingField: {fileID: 935242226}
   _pickupItemScoreMultiplierPrefab: {fileID: 3852439820199026046, guid: ae9df00823e4b43a2877caa3ec95705b, type: 3}
+  _pickupItemScoreMultiplierParent: {fileID: 185079908}
   _scoreMultiplierDropChance: 0.25
   _scoreText: {fileID: 877768011}
   _multiplierText: {fileID: 66056754}
@@ -7511,6 +7575,7 @@ SceneRoots:
   - {fileID: 1796463663}
   - {fileID: 935242226}
   - {fileID: 144928275}
+  - {fileID: 1891405494}
   - {fileID: 1821046208}
   - {fileID: 914535458}
   - {fileID: 1616306989}
