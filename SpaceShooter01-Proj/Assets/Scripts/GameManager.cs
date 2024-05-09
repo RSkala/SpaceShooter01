@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         //CrosshairController.Instance.IsInGameplay = true;
     }
 
-    void EndGame()
+    public void EndGame()
     {
         // Stop Enemy Spawning
         _enemySpawnController.StopSpawning();
@@ -132,6 +132,19 @@ public class GameManager : MonoBehaviour
 
         // Show Game Over Screen
         _gameOverScreen.SetActive(true);
+
+        // We are out of gameplay. Show the system mouse cursor and hide the gameplay crosshair.
+        CrosshairController.Instance.ShowSystemMouseCursor();
+        CrosshairController.Instance.HideCrosshair();
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Quick Fix:  Destroy all enemies -- RKS TODO: Replace with proper pooling
+        EnemyShipBase[] activeEnemyShips = FindObjectsOfType<EnemyShipBase>();
+        foreach(EnemyShipBase enemyShip in activeEnemyShips)
+        {
+            Destroy(enemyShip.gameObject);
+        }
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     }
     
     public GameObject GetRandomExplosionPrefab()

@@ -63,9 +63,35 @@ public abstract class ProjectileBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("ProjectileBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
+        Debug.Log("ProjectileBase.OnTriggerEnter2D - " + gameObject.name + " , other: " + other.gameObject.name);
 
-        if(other.TryGetComponent<EnemyShipBase>(out var enemyShip))
+        // if(other.TryGetComponent<EnemyShipBase>(out var enemyShip))
+        // {
+        //     // Get the enemy ship position before destroying
+        //     Vector2 enemyShipPosition = enemyShip.transform.position;
+
+        //     // Destroy the enemy ship and play sound effect
+        //     enemyShip.DestroyEnemy();
+        //     AudioPlayback.Instance.PlaySound(AudioPlayback.SFX.EnemyExplosion);
+
+        //     // Show an explosion at the destruction position with a random rotation
+        //     GameObject explosionPrefab = GameManager.Instance.GetRandomExplosionPrefab();
+        //     float randomRotation = Random.Range(0.0f, 360.0f);
+        //     Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, randomRotation);
+        //     GameObject.Instantiate(explosionPrefab, enemyShipPosition, rotation, GameManager.Instance.EnemyExplosionParent);
+
+        //     // Deactivate this projectile
+        //     Deactivate();
+        // }
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
+
+        GameObject collidingGameObject = collision.gameObject;
+        
+        if(collidingGameObject.TryGetComponent<EnemyShipBase>(out var enemyShip))
         {
             // Get the enemy ship position before destroying
             Vector2 enemyShipPosition = enemyShip.transform.position;
@@ -83,13 +109,7 @@ public abstract class ProjectileBase : MonoBehaviour
             // Deactivate this projectile
             Deactivate();
         }
-    }
-
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        //Debug.Log("ProjectileBase.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
-
-        if(collision.gameObject.TryGetComponent<GameBorder>(out var gameBorder))
+        else if(collidingGameObject.TryGetComponent<GameBorder>(out var gameBorder))
         {
             // This projectile collided with a GameBorder. Deactivate the projectile.
             Deactivate();
