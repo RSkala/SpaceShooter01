@@ -49,22 +49,37 @@ public abstract class PickupItemBase : MonoBehaviour
         UpdateTargetAttraction();
 
         // Update movement
+        UpdateMovement();
+    }
+
+    protected virtual void UpdateMovement()
+    {
         if(IsAttractingToTarget)
         {
-            // Move this pickup item in the direction of its target
-            Vector2 movementDirection = ((Vector2)_attractionTarget.position - _rigidbody2D.position).normalized;
-            Vector2 newPos = _rigidbody2D.position + movementDirection * _attractionMoveSpeed * Time.fixedDeltaTime;
-            _rigidbody2D.MovePosition(newPos);
+            UpdateAttractionMovement();
         }
         else
         {
-            // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
-            if(_moveSpeed > Mathf.Epsilon)
-            {
-                Vector2 movementDirection = _rigidbody2D.transform.up;
-                Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
-                _rigidbody2D.MovePosition(newPos);
-            }
+            UpdateNonAttractionMovement();
+        }
+    }
+
+    protected virtual void UpdateAttractionMovement()
+    {
+        // Move this pickup item in the direction of its target
+        Vector2 movementDirection = ((Vector2)_attractionTarget.position - _rigidbody2D.position).normalized;
+        Vector2 newPos = _rigidbody2D.position + movementDirection * _attractionMoveSpeed * Time.fixedDeltaTime;
+        _rigidbody2D.MovePosition(newPos);
+    }
+
+    protected virtual void UpdateNonAttractionMovement()
+    {
+        // Move the pickup item in its forward direction. Note if _moveSpeed is 0 (default), it will not move.
+        if(_moveSpeed > Mathf.Epsilon)
+        {
+            Vector2 movementDirection = _rigidbody2D.transform.up;
+            Vector2 newPos = _rigidbody2D.position + movementDirection * _moveSpeed * Time.fixedDeltaTime;
+            _rigidbody2D.MovePosition(newPos);
         }
     }
 
@@ -110,7 +125,7 @@ public abstract class PickupItemBase : MonoBehaviour
         else if(collidingGameObject.TryGetComponent<GameBorder>(out var _))
         {
             // Pickup item has collided with a border wall. Bounce using the reflection.
-            SetProjectileRotationFromCollisionData(collision);
+            HandleCollisionWithGameBorders(collision);
         }
     }
 
@@ -118,6 +133,11 @@ public abstract class PickupItemBase : MonoBehaviour
     {
         // Deactivate this pickup item
         Deactivate();
+    }
+
+    protected virtual void HandleCollisionWithGameBorders(Collision2D collision)
+    {
+        SetProjectileRotationFromCollisionData(collision);
     }
 
     void SetProjectileRotationFromCollisionData(Collision2D collision)
@@ -148,13 +168,7 @@ public abstract class PickupItemBase : MonoBehaviour
         IsActive = true;
         gameObject.SetActive(true);
         ResetDynamicValues();
-
-        if(_moveSpeed > Mathf.Epsilon)
-        {
-            // On Spawn, get a random direction for this pickup item to move
-            float randomAngle = Random.Range(0.0f, 360.0f);
-            _rigidbody2D.SetRotation(randomAngle);
-        }
+        InitMovementValues();
     }
 
     public void Deactivate()
@@ -169,5 +183,15 @@ public abstract class PickupItemBase : MonoBehaviour
         _timeAlive = 0.0f;
         _rigidbody2D.SetRotation(0.0f);
         _attractionTarget = null;
+    }
+
+    protected virtual void InitMovementValues()
+    {
+        if(_moveSpeed > Mathf.Epsilon)
+        {
+            // On Spawn, get a random direction for this pickup item to move
+            float randomAngle = Random.Range(0.0f, 360.0f);
+            _rigidbody2D.SetRotation(randomAngle);
+        }
     }
 }
