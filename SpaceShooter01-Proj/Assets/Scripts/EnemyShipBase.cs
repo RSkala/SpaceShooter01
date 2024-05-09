@@ -7,15 +7,23 @@ public abstract class EnemyShipBase : MonoBehaviour
     [SerializeField] float _moveSpeed;
     [SerializeField] Rigidbody2D _rigidbody2D;
 
+    public float TimeAlive { get; protected set; }
+
     Transform _target;
 
     // The enemy ship assets are built facing downwards so it's easiest just to rotate the facing
     const float EXTRA_ROTATION_ANGLE = 180.0f;
 
+    // The amount of time a collision with the player will do nothing.
+    // This is a short-term solution for the issue when enemies spawn almost exactly on top of the player ship.
+    public const float PLAYER_INVULNERABLE_TIME_SECONDS = 1.0f;
+
     protected virtual void Start()
     {
         // Components
         //_rigidbody2D = GetComponent<Rigidbody2D>();
+
+        TimeAlive = 0.0f;
 
         // Default to just targeting the player
         //_target = GameObject.Find("PlayerShip_1").transform;
@@ -24,6 +32,8 @@ public abstract class EnemyShipBase : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        TimeAlive += Time.fixedDeltaTime;
+
         // Default to just moving directly towards the target
         if(_target == null)
         {

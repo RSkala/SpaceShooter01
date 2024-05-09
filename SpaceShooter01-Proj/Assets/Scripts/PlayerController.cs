@@ -290,19 +290,25 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("PlayerController.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
-
+        //Debug.Log("PlayerController.OnCollisionEnter2D - " + gameObject.name + " , collision: " + collision.gameObject.name);
         GameObject collidingGameObject = collision.gameObject;
 
         if(collidingGameObject.TryGetComponent<EnemyShipBase>(out var enemyShip))
         {
-            // The player has collided with an enemy ship. Destroy the player.
-            Destroy(gameObject);
+            if(enemyShip.TimeAlive >= EnemyShipBase.PLAYER_INVULNERABLE_TIME_SECONDS)
+            {
+                // The player has collided with an enemy ship. Destroy the player.
+                Destroy(gameObject);
 
-            // TODO: Show player explosion effect
+                // TODO: Show player explosion effect
 
-            // Game Over
-            GameManager.Instance.EndGame();
+                // Game Over
+                GameManager.Instance.EndGame();
+            }
+            else
+            {
+                //Debug.Log("Spawn time too short. Ignoring Player Ship collision with " + collidingGameObject.name);
+            }
         }
     }
 
