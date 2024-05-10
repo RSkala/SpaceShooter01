@@ -363,13 +363,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    const int NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN = 11;
+    const int NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN = 20;
     void SpawnSatelliteWeaponPickup(Vector2 position)
     {
         // TEMP: Spawn Satellite Weapon pickup after X number of enemies destroyed
         if(!_currentPlayerShip.HasSatelliteWeapon && !_currentSatelliteWeaponPickup.IsActive)
         {
-            if(_numEnemiesDestroyed > NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN)
+            if(_numEnemiesDestroyed >= NUM_ENEMIES_DEFEATED_FOR_SATELLITE_PICKUP_SPAWN)
             {
                 _currentSatelliteWeaponPickup.transform.position = position;
                 _currentSatelliteWeaponPickup.Activate();
